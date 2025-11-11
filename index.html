@@ -190,6 +190,75 @@
     </div>
   </div>
 
+  <!-- ========================================== -->
+  <!-- ENHANCED UI UNTUK PELAJAR - TAMBAH DI SINI -->
+  <!-- ========================================== -->
+  
+  <!-- Help Section untuk Pelajar -->
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-warning">
+          <h6><i class="bi bi-lightbulb"></i> Tips Pantas</h6>
+        </div>
+        <div class="card-body">
+          <ul class="small">
+            <li>Gunakan <strong>Chrome</strong> atau <strong>Edge</strong> untuk prestasi terbaik</li>
+            <li>Klik butang <strong>🔊</strong> untuk dengar sebutan Arab</li>
+            <li>Simpan kemajuan jika tidak dapat habiskan dalam satu sesi</li>
+            <li>Pastikan internet stabil semasa membuat latihan</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h6><i class="bi bi-question-circle"></i> Bantuan</h6>
+        </div>
+        <div class="card-body text-center">
+          <button class="btn btn-outline-info mb-2" onclick="showSubmissionGuide()">
+            <i class="bi bi-play-circle"></i> Panduan Video
+          </button>
+          <br>
+          <button class="btn btn-outline-secondary btn-sm" onclick="downloadStepByStepGuide()">
+            <i class="bi bi-download"></i> Muat Turun Arahan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Tracking Enhanced -->
+  <div class="card mt-3">
+    <div class="card-header bg-light">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="mb-0"><i class="bi bi-graph-up"></i> Status Penyelesaian</h6>
+        <span id="completionStatus" class="badge bg-warning">Sedang Berjalan</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="progress mb-2" style="height: 20px;">
+        <div id="enhancedProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+             role="progressbar" style="width: 0%">0%</div>
+      </div>
+      <div class="row text-center small">
+        <div class="col-3">
+          <span id="vocab-status" class="badge bg-secondary">❌ Kosa Kata</span>
+        </div>
+        <div class="col-3">
+          <span id="reorder-status" class="badge bg-secondary">❌ Susun Ayat</span>
+        </div>
+        <div class="col-3">
+          <span id="dialog-status" class="badge bg-secondary">❌ Dialog</span>
+        </div>
+        <div class="col-3">
+          <span id="mcq-status" class="badge bg-secondary">❌ Pilihan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bahagian Penghantaran Google Classroom -->
   <div class="card submission-info mt-4">
     <h4><i class="bi bi-google"></i> Penghantaran ke Google Classroom</h4>
@@ -229,6 +298,92 @@
     </div>
   </div>
 
+  <!-- ========================================== -->
+  <!-- MODAL UNTUK PANDUAN - TAMBAH DI SINI -->
+  <!-- ========================================== -->
+  
+  <!-- Modal Panduan Penghantaran -->
+  <div class="modal fade" id="submissionGuide" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Panduan Penghantaran</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Langkah di Website:</h6>
+              <ol>
+                <li>Isi maklumat pelajar</li>
+                <li>Lengkapkan 4 bahagian latihan</li>
+                <li>Klik "Semak Jawapan" setiap bahagian</li>
+                <li>Pastikan status HIJAU</li>
+                <li>Klik "Jana Fail Penghantaran"</li>
+              </ol>
+            </div>
+            <div class="col-md-6">
+              <h6>Langkah di Google Classroom:</h6>
+              <ol>
+                <li>Buka tugasan الضمائر</li>
+                <li>Klik "Tambah atau buat"</li>
+                <li>Pilih "Fail" → "Muat naik"</li>
+                <li>Pilih file JSON yang dimuat turun</li>
+                <li>Klik "Serahkan"</li>
+              </ol>
+            </div>
+          </div>
+          <div class="alert alert-info mt-3">
+            <i class="bi bi-info-circle"></i> 
+            <strong>Perhatian:</strong> File JSON mengandungi semua jawapan dan markah anda.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" onclick="downloadStepByStepGuide()">
+            <i class="bi bi-download"></i> Muat Turun Panduan PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Kejayaan -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title"><i class="bi bi-check-circle"></i> Berjaya Dijana!</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3">
+            <i class="bi bi-cloud-check-fill text-success" style="font-size: 3rem;"></i>
+          </div>
+          <p><strong>Fail berjaya dimuat turun!</strong></p>
+          <div class="alert alert-warning">
+            <h6>Seterusnya, hantar ke Google Classroom:</h6>
+            <ol class="small">
+              <li>Buka <strong>Google Classroom</strong></li>
+              <li>Cari tugasan <strong>"الضمائر"</strong></li>
+              <li>Klik <strong>"Tambah atau buat"</strong> → <strong>"Fail"</strong></li>
+              <li>Pilih fail <strong>JSON</strong> yang dimuat turun</li>
+              <li>Klik <strong>"Serahkan"</strong></li>
+            </ol>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-outline-primary btn-sm" onclick="showSubmissionGuide()">
+              <i class="bi bi-question-circle"></i> Lihat Panduan Lengkap
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Teruskan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Data dan fungsi asal latihan
     let scores = { vocab: 0, reorder: 0, dialog: 0, mcq: 0 };
@@ -259,6 +414,236 @@
         svg: '<svg class="routine-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="#FFD54F" /><circle cx="50" cy="30" r="10" fill="#FFD54F" /><circle cx="70" cy="30" r="10" fill="#FFD54F" /><rect x="20" y="45" width="20" height="35" fill="#9C27B0" /><rect x="40" y="45" width="20" height="35" fill="#9C27B0" /><rect x="60" y="45" width="20" height="35" fill="#9C27B0" /></svg>' }
     ];
 
+    // ====================
+    // FUNGSI ENHANCED UNTUK PELAJAR
+    // TAMBAH DALAM BAHAGIAN SCRIPT
+    // ====================
+
+    // Fungsi untuk guidance pelajar
+    function showSubmissionGuide() {
+        const modal = new bootstrap.Modal(document.getElementById('submissionGuide'));
+        modal.show();
+    }
+
+    // Fungsi untuk download panduan step-by-step
+    function downloadStepByStepGuide() {
+        const content = `PANDUAN LENGKAP - HANTAR KEPUTUSAN الضمائر KE GOOGLE CLASSROOM
+            
+LANGKAH 1: LENGKAPKAN LATIHAN
+- Buka link: ${window.location.href}
+- Isi nama, ID pelajar, kod tugasan
+- Jawab semua soalan dalam 4 bahagian
+- Klik "Semak Jawapan" setiap bahagian
+
+LANGKAH 2: JANA FAIL
+- Pastikan semua bahagian status HIJAU
+- Klik "Jana Fail Penghantaran"
+- File JSON akan dimuat turun automatik
+
+LANGKAH 3: HANTAR KE CLASSROOM
+- Buka Google Classroom
+- Cari tugasan "الضمائر"
+- Klik "Tambah atau buat" → "Fail" → "Muat naik"
+- Pilih file JSON yang dimuat turun
+- Klik "Serahkan"
+
+BANTUAN:
+- Email guru: [SILA ISI EMAIL GURU]
+- Group WhatsApp kelas
+
+Tarikh: ${new Date().toLocaleDateString('ms-MY')}
+        `;
+        
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Panduan_Penghantaran_${new Date().toISOString().slice(0,10)}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function showSubmissionSuccess(studentName, fileName) {
+        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+    }
+
+    // Enhanced progress tracking function
+    function updateProgress() {
+        let completed = 0;
+        const totalSections = 4;
+        
+        // Update status badges
+        const vocabStatus = document.getElementById('vocab-status');
+        const reorderStatus = document.getElementById('reorder-status');
+        const dialogStatus = document.getElementById('dialog-status');
+        const mcqStatus = document.getElementById('mcq-status');
+        const completionStatus = document.getElementById('completionStatus');
+        
+        if (scores.vocab > 0) {
+            completed++;
+            if (vocabStatus) {
+                vocabStatus.className = 'badge bg-success';
+                vocabStatus.innerHTML = '✅ Kosa Kata';
+            }
+        }
+        
+        if (scores.reorder > 0) {
+            completed++;
+            if (reorderStatus) {
+                reorderStatus.className = 'badge bg-success';
+                reorderStatus.innerHTML = '✅ Susun Ayat';
+            }
+        }
+        
+        if (scores.dialog > 0) {
+            completed++;
+            if (dialogStatus) {
+                dialogStatus.className = 'badge bg-success';
+                dialogStatus.innerHTML = '✅ Dialog';
+            }
+        }
+        
+        if (scores.mcq > 0) {
+            completed++;
+            if (mcqStatus) {
+                mcqStatus.className = 'badge bg-success';
+                mcqStatus.innerHTML = '✅ Pilihan';
+            }
+        }
+        
+        const percentage = Math.round((completed / totalSections) * 100);
+        
+        // Update progress bar
+        const progressBar = document.getElementById('enhancedProgressBar');
+        const originalProgressBar = document.getElementById('progressBar');
+        
+        if (progressBar) {
+            progressBar.style.width = `${percentage}%`;
+            progressBar.textContent = `${percentage}%`;
+            progressBar.setAttribute('aria-valuenow', percentage);
+            
+            // Update progress bar color based on completion
+            if (percentage === 100) {
+                progressBar.className = 'progress-bar bg-success progress-bar-striped';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-success';
+                    completionStatus.textContent = 'Sedia Hantar!';
+                }
+            } else if (percentage >= 50) {
+                progressBar.className = 'progress-bar bg-warning progress-bar-striped progress-bar-animated';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-warning';
+                    completionStatus.textContent = 'Separuh Siap';
+                }
+            } else {
+                progressBar.className = 'progress-bar bg-info progress-bar-striped progress-bar-animated';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-info';
+                    completionStatus.textContent = 'Sedang Berjalan';
+                }
+            }
+        }
+        
+        // Update original progress bar
+        if (originalProgressBar) {
+            originalProgressBar.style.width = `${percentage}%`;
+            originalProgressBar.textContent = `${percentage}%`;
+            originalProgressBar.setAttribute('aria-valuenow', percentage);
+        }
+        
+        // Update completion percentage
+        const completionPercentage = document.getElementById('completionPercentage');
+        if (completionPercentage) {
+            completionPercentage.textContent = `${percentage}% Selesai`;
+        }
+        
+        // Update submit button status
+        const submitButton = document.getElementById('submitButton');
+        const submissionStatus = document.getElementById('submissionStatus');
+        
+        if (percentage === 100) {
+            if (submitButton) submitButton.disabled = false;
+            if (submissionStatus) {
+                submissionStatus.className = 'alert alert-success';
+                submissionStatus.innerHTML = '<i class="bi bi-check-circle"></i> Semua bahagian selesai! Klik "Jana Fail Penghantaran".';
+            }
+        } else {
+            if (submitButton) submitButton.disabled = true;
+            if (submissionStatus) {
+                submissionStatus.className = 'alert alert-warning';
+                submissionStatus.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${completed}/${totalSections} bahagian selesai. Selesaikan semua bahagian.`;
+            }
+        }
+        
+        return percentage;
+    }
+
+    // Enhanced submission function
+    function generateSubmissionFile() {
+        const studentName = document.getElementById('studentName').value || 'Nama_Tidak_Diberikan';
+        const studentId = document.getElementById('studentId').value || 'ID_Tidak_Diberikan';
+        
+        // Check if all sections are completed
+        const progress = updateProgress();
+        if (progress < 100) {
+            alert('Sila lengkapkan SEMUA bahagian latihan terlebih dahulu!\n\nPastikan anda telah klik "Semak Jawapan" untuk setiap bahagian.');
+            return;
+        }
+        
+        // Continue dengan fungsi asal...
+        const courseCode = document.getElementById('courseCode').value || 'Tiada_Kod';
+        
+        const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
+        const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
+        const percent = (total / max * 100).toFixed(1);
+        
+        const studentAnswers = {
+            studentInfo: {
+                name: studentName,
+                id: studentId,
+                courseCode: courseCode,
+                submissionTime: new Date().toLocaleString('ms-MY'),
+                timeSpent: `${timeSpent} minit`,
+                pageUrl: window.location.href
+            },
+            scores: {
+                vocab: scores.vocab,
+                reorder: scores.reorder,
+                dialog: scores.dialog,
+                mcq: scores.mcq,
+                total: total,
+                maxPossible: max,
+                percentage: percent
+            },
+            answers: {
+                vocab: collectVocabAnswers(),
+                reorder: collectReorderAnswers(),
+                dialog: collectDialogAnswers(),
+                mcq: collectMcqAnswers()
+            }
+        };
+        
+        const jsonData = JSON.stringify(studentAnswers, null, 2);
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const fileName = `Penghantaran_${studentName.replace(/\s+/g, '_')}_${courseCode || 'Al-dhamair'}_${new Date().toISOString().slice(0,10)}.json`;
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Show success message dengan arahan selanjutnya
+        showSubmissionSuccess(studentName, fileName);
+    }
+
     // Fungsi untuk memulakan penjejakan masa
     function startTimeTracking() {
       startTime = new Date();
@@ -270,97 +655,6 @@
       const now = new Date();
       timeSpent = Math.floor((now - startTime) / 60000); // dalam minit
       document.getElementById('timeSpent').textContent = `${timeSpent} minit`;
-    }
-    
-    // Fungsi untuk mengemas kini bar kemajuan
-    function updateProgress() {
-      let completed = 0;
-      const totalSections = 4;
-      
-      // Periksa setiap bahagian sama ada telah disemak
-      if (scores.vocab > 0) completed++;
-      if (scores.reorder > 0) completed++;
-      if (scores.dialog > 0) completed++;
-      if (scores.mcq > 0) completed++;
-      
-      const percentage = Math.round((completed / totalSections) * 100);
-      document.getElementById('progressBar').style.width = `${percentage}%`;
-      document.getElementById('progressBar').textContent = `${percentage}%`;
-      document.getElementById('progressBar').setAttribute('aria-valuenow', percentage);
-      document.getElementById('completionPercentage').textContent = `${percentage}% Selesai`;
-      
-      // Aktifkan butang penghantaran jika semua bahagian selesai
-      const submitButton = document.getElementById('submitButton');
-      const submissionStatus = document.getElementById('submissionStatus');
-      
-      if (percentage === 100) {
-        submitButton.disabled = false;
-        submissionStatus.className = 'alert alert-success';
-        submissionStatus.innerHTML = '<i class="bi bi-check-circle"></i> Latihan selesai! Sila jana fail penghantaran.';
-      } else {
-        submitButton.disabled = true;
-        submissionStatus.className = 'alert alert-warning';
-        submissionStatus.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Latihan belum selesai sepenuhnya.';
-      }
-      
-      return percentage;
-    }
-    
-    // Fungsi untuk menjana fail penghantaran untuk Google Classroom
-    function generateSubmissionFile() {
-      const studentName = document.getElementById('studentName').value || 'Nama Tidak Diberikan';
-      const studentId = document.getElementById('studentId').value || 'ID Tidak Diberikan';
-      const courseCode = document.getElementById('courseCode').value || 'Tiada Kod';
-      
-      const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
-      const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
-      const percent = (total / max * 100).toFixed(1);
-      
-      // Kumpulkan semua jawapan pelajar
-      const studentAnswers = {
-        studentInfo: {
-          name: studentName,
-          id: studentId,
-          courseCode: courseCode,
-          submissionTime: new Date().toLocaleString('ms-MY'),
-          timeSpent: `${timeSpent} minit`
-        },
-        scores: {
-          vocab: scores.vocab,
-          reorder: scores.reorder,
-          dialog: scores.dialog,
-          mcq: scores.mcq,
-          total: total,
-          maxPossible: max,
-          percentage: percent
-        },
-        answers: {
-          vocab: collectVocabAnswers(),
-          reorder: collectReorderAnswers(),
-          dialog: collectDialogAnswers(),
-          mcq: collectMcqAnswers()
-        }
-      };
-      
-      // Buat fail JSON
-      const jsonData = JSON.stringify(studentAnswers, null, 2);
-      const blob = new Blob([jsonData], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      
-      // Nama fail yang bermaklumat
-      const fileName = `Penghantaran_${studentName.replace(/\s+/g, '_')}_${courseCode || 'Al-dhamair'}_${new Date().toISOString().slice(0,10)}.json`;
-      
-      // Muat turun fail
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      // Tunjukkan arahan penghantaran
-      alert(`Fail "${fileName}" telah dimuat turun. Sila hantar fail ini ke Google Classroom mengikut arahan guru anda.`);
     }
     
     // Fungsi untuk mengumpul jawapan bahagian kosa kata
