@@ -49,6 +49,24 @@
     .progress-section { margin: 20px 0; }
     .completion-badge { font-size: 0.9em; padding: 5px 10px; margin-left: 10px; }
     .time-tracking { font-size: 0.9em; color: #666; margin-top: 5px; }
+    
+    /* Gaya khas untuk modal panduan LTR */
+    .ltr-guide { direction: ltr; text-align: left; }
+    .ltr-guide ol { padding-left: 20px; }
+    .step-number { 
+      display: inline-block; 
+      width: 24px; 
+      height: 24px; 
+      background: #0d6efd; 
+      color: white; 
+      border-radius: 50%; 
+      text-align: center; 
+      line-height: 24px; 
+      margin-right: 8px; 
+      font-size: 0.8em;
+    }
+    .guide-section { border-left: 3px solid #0d6efd; padding-left: 15px; margin-bottom: 20px; }
+    .guide-icon { font-size: 1.5em; margin-right: 10px; color: #0d6efd; }
   </style>
 </head>
 <body>
@@ -85,19 +103,19 @@
     <div class="row">
       <div class="col-md-6">
         <div class="mb-3">
-          <label for="studentName" class="form-label">Nama Penuh:</label>
+          <label for="studentName" class="form-label">:Nama Penuh</label>
           <input type="text" class="form-control" id="studentName" placeholder="Masukkan nama penuh anda (RUMI)">
         </div>
       </div>
       <div class="col-md-6">
         <div class="mb-3">
-          <label for="studentId" class="form-label">ID Pelajar:</label>
+          <label for="studentId" class="form-label">:No Matrik Pelajar</label>
           <input type="text" class="form-control" id="studentId" placeholder="Contoh: 254200001">
         </div>
       </div>
     </div>
     <div class="mb-3">
-      <label for="courseCode" class="form-label">Kod Kursus (jika ada):</label>
+      <label for="courseCode" class="form-label">:Kod Kursus (jika ada)</label>
       <input type="text" class="form-control" id="courseCode" placeholder="Kod yang diberikan oleh guru">
     </div>
   </div>
@@ -218,7 +236,7 @@
         </div>
         <div class="card-body text-center">
           <button class="btn btn-outline-info mb-2" onclick="showSubmissionGuide()">
-            <i class="bi bi-play-circle"></i> Baca Panduan
+            <i class="bi bi-play-circle"></i> Lihat Panduan
           </button>
           <br>
           <button class="btn btn-outline-secondary btn-sm" onclick="downloadStepByStepGuide()">
@@ -302,40 +320,126 @@
   <!-- MODAL UNTUK PANDUAN - TAMBAH DI SINI -->
   <!-- ========================================== -->
   
-  <!-- Modal Panduan Penghantaran -->
+  <!-- Modal Panduan Penghantaran - DIUBAH SUSUNAN DARI KIRI KE KANAN -->
   <div class="modal fade" id="submissionGuide" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+      <div class="modal-content ltr-guide">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Panduan Penghantaran</h5>
+          <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Panduan Penghantaran Lengkap</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="row">
+            <!-- FASA 1: LENGKAPKAN LATIHAN -->
             <div class="col-md-6">
-              <h6>:Langkah di Website</h6>
-              <ol>
-                <li>Isi maklumat pelajar</li>
-                <li>Lengkapkan 4 bahagian latihan</li>
-                <li>Klik "تحقق من الإجابة" untuk menyemak jawapan setiap bahagian</li>
-                <li>Status HIJAU menunjukkan jawapan anda betul</li>
-                <li>Klik "Jana Fail Penghantaran"</li>
-              </ol>
+              <div class="guide-section">
+                <h6 class="d-flex align-items-center">
+                  <i class="bi bi-laptop guide-icon"></i>
+                  Fasa 1: Lengkapkan Latihan di Website
+                </h6>
+                <ol class="list-unstyled">
+                  <li class="mb-2">
+                    <span class="step-number">1</span>
+                    <strong>Isi Maklumat Pelajar</strong>
+                    <div class="small text-muted">Nama penuh, No Matrik pelajar dan kod kursus</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">2</span>
+                    <strong>Jawab Semua Bahagian</strong>
+                    <div class="small text-muted">4 bahagian: Kosa Kata, Susun Ayat, Dialog & Soalan Pilihan</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">3</span>
+                    <strong>Klik "Semak Jawapan"</strong>
+                    <div class="small text-muted">Untuk setiap bahagian setelah selesai</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">4</span>
+                    <strong>Pastikan Status 100% Hijau</strong>
+                    <div class="small text-muted">Semua bahagian mesti berstatus ✅</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">5</span>
+                    <strong>Klik "Jana Fail Penghantaran"</strong>
+                    <div class="small text-muted">Fail JSON akan dimuat turun automatik</div>
+                  </li>
+                </ol>
+              </div>
             </div>
+            
+            <!-- FASA 2: HANTAR KE GOOGLE CLASSROOM -->
             <div class="col-md-6">
-              <h6>:Langkah di Google Classroom</h6>
-              <ol>
-                <li>Buka tugasan الضمائر</li>
-                <li>Klik "Tambah atau buat"</li>
-                <li>Pilih "Fail" → "Muat naik"</li>
-                <li>Pilih file JSON yang dimuat turun</li>
-                <li>Klik "Serahkan"</li>
-              </ol>
+              <div class="guide-section">
+                <h6 class="d-flex align-items-center">
+                  <i class="bi bi-google guide-icon"></i>
+                  Fasa 2: Hantar ke Google Classroom
+                </h6>
+                <ol class="list-unstyled">
+                  <li class="mb-2">
+                    <span class="step-number">1</span>
+                    <strong>Buka Google Classroom</strong>
+                    <div class="small text-muted">Login ke akaun Universiti anda</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">2</span>
+                    <strong>Cari Tugasan "الضمائر"</strong>
+                    <div class="small text-muted">Dalam kelas yang betul</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">3</span>
+                    <strong>Klik "Tambah atau buat"</strong>
+                    <div class="small text-muted">Butang di bahagian tugasan</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">4</span>
+                    <strong>Pilih "Fail" → "Muat naik"</strong>
+                    <div class="small text-muted">Cari fail JSON yang dimuat turun</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">5</span>
+                    <strong>Klik "Serahkan"</strong>
+                    <div class="small text-muted">Untuk hantar tugasan secara rasmi</div>
+                  </li>
+                </ol>
+              </div>
             </div>
           </div>
-          <div class="alert alert-info mt-3">
-            <i class="bi bi-info-circle"></i> 
-            <strong>Perhatian:</strong> File JSON mengandungi semua jawapan dan markah anda.
+          
+          <!-- INFO TAMBAHAN -->
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="alert alert-info">
+                <div class="d-flex">
+                  <i class="bi bi-info-circle fs-4 me-3"></i>
+                  <div>
+                    <h6 class="alert-heading">Maklumat Penting</h6>
+                    <ul class="mb-0 small">
+                      <li>Fail JSON mengandungi <strong>semua jawapan dan markah</strong> anda</li>
+                      <li>Guru akan menerima fail yang sama untuk semakan</li>
+                      <li>Pastikan nama fail mengandungi nama anda untuk pengenalan</li>
+                      <li>Jika ada masalah, hubungi guru melalui email atau Google Classroom</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CONTOH FAIL -->
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="card border-secondary">
+                <div class="card-header bg-light py-2">
+                  <h6 class="mb-0"><i class="bi bi-file-earmark-code"></i> Contoh Nama Fail</h6>
+                </div>
+                <div class="card-body py-3">
+                  <code class="small">Penghantaran_AHMAD_BIN_ABDULLAH_Al-dhamair_2024-03-15.json</code>
+                  <div class="small text-muted mt-1">
+                    Format: Penghantaran_[NAMA]_[KOD_KURSUS]_[TARIKH].json
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -343,15 +447,18 @@
           <button type="button" class="btn btn-primary" onclick="downloadStepByStepGuide()">
             <i class="bi bi-download"></i> Muat Turun Panduan PDF
           </button>
+          <button type="button" class="btn btn-success" onclick="showVisualGuide()">
+            <i class="bi bi-images"></i> Panduan Visual
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Kejayaan -->
+  <!-- Modal Kejayaan - DIUBAH SUSUNAN DARI KIRI KE KANAN -->
   <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content ltr-guide">
         <div class="modal-header bg-success text-white">
           <h5 class="modal-title"><i class="bi bi-check-circle"></i> Berjaya Dijana!</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -360,10 +467,14 @@
           <div class="text-center mb-3">
             <i class="bi bi-cloud-check-fill text-success" style="font-size: 3rem;"></i>
           </div>
-          <p><strong>Fail berjaya dimuat turun!</strong></p>
+          <p class="text-center"><strong>Fail berjaya dimuat turun!</strong></p>
+          
           <div class="alert alert-warning">
-            <h6>Seterusnya, hantar ke Google Classroom:</h6>
-            <ol class="small">
+            <h6 class="d-flex align-items-center">
+              <i class="bi bi-arrow-right-circle me-2"></i>
+              Seterusnya, hantar ke Google Classroom:
+            </h6>
+            <ol class="small mb-0">
               <li>Buka <strong>Google Classroom</strong></li>
               <li>Cari tugasan <strong>"الضمائر"</strong></li>
               <li>Klik <strong>"Tambah atau buat"</strong> → <strong>"Fail"</strong></li>
@@ -371,7 +482,8 @@
               <li>Klik <strong>"Serahkan"</strong></li>
             </ol>
           </div>
-          <div class="text-center">
+          
+          <div class="text-center mt-3">
             <button class="btn btn-outline-primary btn-sm" onclick="showSubmissionGuide()">
               <i class="bi bi-question-circle"></i> Lihat Panduan Lengkap
             </button>
@@ -379,6 +491,61 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-bs-dismiss="modal">Teruskan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Panduan Visual -->
+  <div class="modal fade" id="visualGuide" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content ltr-guide">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title"><i class="bi bi-images"></i> Panduan Visual</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <h6>Langkah di Website</h6>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="placeholder-visual bg-light rounded p-4 mb-3">
+                    <i class="bi bi-laptop" style="font-size: 3rem; color: #6c757d;"></i>
+                    <p class="mt-2 small">Gambar ilustrasi langkah-langkah di website</p>
+                  </div>
+                  <ol class="text-start small">
+                    <li>Isi maklumat pelajar</li>
+                    <li>Lengkapkan 4 bahagian latihan</li>
+                    <li>Klik "تحقق من الإجابة" untuk menyemak jawapan di setiap bahagian</li>
+                    <li>Status hijau menunjukkan jawapan betul</li>
+                    <li>Klik "Jana Fail Penghantaran"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 text-center">
+              <h6>Langkah di Google Classroom</h6>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="placeholder-visual bg-light rounded p-4 mb-3">
+                    <i class="bi bi-phone" style="font-size: 3rem; color: #6c757d;"></i>
+                    <p class="mt-2 small">Gambar ilustrasi langkah-langkah di Classroom</p>
+                  </div>
+                  <ol class="text-start small">
+                    <li>Buka Google Classroom</li>
+                    <li>Cari tugasan الضمائر</li>
+                    <li>Klik "Tambah atau buat"</li>
+                    <li>Pilih "Fail" → "Muat naik"</li>
+                    <li>Klik "Serahkan"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
         </div>
       </div>
     </div>
@@ -425,27 +592,38 @@
         modal.show();
     }
 
+    // Fungsi untuk menunjukkan panduan visual
+    function showVisualGuide() {
+        const modal = new bootstrap.Modal(document.getElementById('visualGuide'));
+        modal.show();
+    }
+
     // Fungsi untuk download panduan step-by-step
     function downloadStepByStepGuide() {
         const content = `PANDUAN LENGKAP - HANTAR KEPUTUSAN الضمائر KE GOOGLE CLASSROOM
             
-LANGKAH 1: LENGKAPKAN LATIHAN
-- Buka link: ${window.location.href}
-- Isi nama, ID pelajar, kod tugasan
-- Jawab semua soalan dalam 4 bahagian
-- Klik "Semak Jawapan" setiap bahagian
+FASA 1: LENGKAPKAN LATIHAN DI WEBSITE
+1. Isi Maklumat Pelajar - Nama penuh, ID pelajar dan kod kursus
+2. Jawab Semua Bahagian - 4 bahagian: Kosa Kata, Susun Ayat, Dialog & Soalan Pilihan
+3. Klik "Semak Jawapan" - Untuk setiap bahagian setelah selesai
+4. Pastikan Status 100% Hijau - Semua bahagian mesti berstatus ✅
+5. Klik "Jana Fail Penghantaran" - Fail JSON akan dimuat turun automatik
 
-LANGKAH 2: JANA FAIL
-- Pastikan semua bahagian status HIJAU
-- Klik "Jana Fail Penghantaran"
-- File JSON akan dimuat turun automatik
+FASA 2: HANTAR KE GOOGLE CLASSROOM
+1. Buka Google Classroom - Login ke akaun sekolah anda
+2. Cari Tugasan "الضمائر" - Dalam kelas yang betul
+3. Klik "Tambah atau buat" - Butang di bahagian tugasan
+4. Pilih "Fail" → "Muat naik" - Cari fail JSON yang dimuat turun
+5. Klik "Serahkan" - Untuk hantar tugasan secara rasmi
 
-LANGKAH 3: HANTAR KE CLASSROOM
-- Buka Google Classroom
-- Cari tugasan "الضمائر"
-- Klik "Tambah atau buat" → "Fail" → "Muat naik"
-- Pilih file JSON yang dimuat turun
-- Klik "Serahkan"
+MAKLUMAT PENTING:
+- Fail JSON mengandungi semua jawapan dan markah anda
+- Guru akan menerima fail yang sama untuk semakan
+- Pastikan nama fail mengandungi nama anda untuk pengenalan
+- Jika ada masalah, hubungi guru melalui email atau Google Classroom
+
+CONTOH NAMA FAIL:
+Penghantaran_AHMAD_BIN_ABDULLAH_Al-dhamair_2024-03-15.json
 
 BANTUAN:
 - Email guru: [SILA ISI EMAIL GURU]
@@ -463,6 +641,8 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        
+        alert('Panduan telah dimuat turun. Sila buka fail teks untuk membaca panduan lengkap.');
     }
 
     function showSubmissionSuccess(studentName, fileName) {
