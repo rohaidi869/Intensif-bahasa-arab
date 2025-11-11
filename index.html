@@ -605,8 +605,8 @@
 FASA 1: LENGKAPKAN LATIHAN DI WEBSITE
 1. Isi Maklumat Pelajar - Nama penuh, ID pelajar dan kod kursus
 2. Jawab Semua Bahagian - 4 bahagian: Kosa Kata, Susun Ayat, Dialog & Soalan Pilihan
-3. Klik "Semak Jawapan" - Untuk setiap bahagian setelah selesai
-4. Pastikan Status 100% Hijau - Semua bahagian mesti berstatus ✅
+3. Klik "تحقق من الإجابة" - Untuk setiap bahagian setelah selesai
+4. Status Hijau - Menunjukkan jawapan betul ✅
 5. Klik "Jana Fail Penghantaran" - Fail JSON akan dimuat turun automatik
 
 FASA 2: HANTAR KE GOOGLE CLASSROOM
@@ -769,7 +769,7 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         // Check if all sections are completed
         const progress = updateProgress();
         if (progress < 100) {
-            alert('Sila lengkapkan SEMUA bahagian latihan terlebih dahulu!\n\nPastikan anda telah klik "Semak Jawapan" untuk setiap bahagian.');
+            alert('Sila lengkapkan SEMUA bahagian latihan terlebih dahulu!\n\nPastikan anda telah klik "تحقق من الإجابة" untuk setiap bahagian.');
             return;
         }
         
