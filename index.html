@@ -86,7 +86,7 @@
       <div class="col-md-6">
         <div class="mb-3">
           <label for="studentName" class="form-label">Nama Penuh:</label>
-          <input type="text" class="form-control" id="studentName" placeholder="Masukkan nama penuh anda (RUMI) ">
+          <input type="text" class="form-control" id="studentName" placeholder="Masukkan nama penuh anda">
         </div>
       </div>
       <div class="col-md-6">
@@ -524,7 +524,6 @@
       });
     }
 
-
     // Fungsi-fungsi asal latihan (dikekalkan dari kod asal)
     function createVocabQuiz() {
       const container = document.getElementById("vocab-questions");
@@ -883,36 +882,7 @@
         container.appendChild(div);
       });
     }
-<!-- Progress Tracking Enhanced -->
-<div class="card mt-3">
-    <div class="card-header bg-light">
-        <div class="d-flex justify-content-between align-items-center">
-            <h6 class="mb-0"><i class="bi bi-graph-up"></i> Status Penyelesaian</h6>
-            <span id="completionStatus" class="badge bg-warning">Sedang Berjalan</span>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="progress mb-2" style="height: 20px;">
-            <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
-                 role="progressbar" style="width: 0%">0%</div>
-        </div>
-        <div class="row text-center small">
-            <div class="col-3">
-                <span id="vocab-status" class="badge bg-secondary">❌ Kosa Kata</span>
-            </div>
-            <div class="col-3">
-                <span id="reorder-status" class="badge bg-secondary">❌ Susun Ayat</span>
-            </div>
-            <div class="col-3">
-                <span id="dialog-status" class="badge bg-secondary">❌ Dialog</span>
-            </div>
-            <div class="col-3">
-                <span id="mcq-status" class="badge bg-secondary">❌ Pilihan</span>
-            </div>
-        </div>
-    </div>
-</div>
-    
+
     function checkMcqAnswers() {
       let correct = 0;
       mcqData.forEach((item, index) => {
