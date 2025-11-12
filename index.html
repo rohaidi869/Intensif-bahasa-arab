@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Latihan Interaktif - أسماء الاستفهام</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Noto+Sans&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    body { 
+      font-family: 'Tajawal', 'Noto Sans', sans-serif; 
+      font-size: 18px; 
+      direction: rtl; 
+      text-align: right; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #e0f7fa, #f3e5f5); 
+      min-height: 100vh; 
+      margin: 0; 
+    }
+    
+    h2 { 
+      color: #1565c0; 
+      font-weight: 700; 
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1); 
+    }
+    
+    /* Navigasi responsif */
+    .nav-tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-tabs {
+        flex-direction: column;
+      }
+      
+      .nav-tabs .nav-link {
+        margin: 5px 0;
+        text-align: center;
+      }
+    }
+    
+    .nav-tabs .nav-link { 
+      border: 1px solid #1565c0 !important; 
+      border-radius: 12px !important; 
+      margin: 0 5px; 
+      color: #1565c0; 
+      font-weight: 600; 
+      transition: all 0.3s ease; 
+      white-space: nowrap;
+    }
+    
+    .nav-tabs .nav-link.active { 
+      background-color: #1565c0 !important; 
+      color: white !important; 
+      border-color: #1565c0 !important; 
+    }
+    
+    .tab-content > .tab-pane { display: none; }
+    .tab-content > .active { display: block; }
+    
+    .card { 
+      border-radius: 16px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+      background: white; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      transition: transform 0.2s; 
+    }
+    
+    .card:hover { transform: translateY(-5px); }
+    
+    .correct { 
+      border: 2px solid #4caf50; 
+      background-color: #e8f5e8; 
+      animation: highlight 0.8s ease-in-out; 
+    }
+    
+    .incorrect { 
+      border: 2px solid #f44336; 
+      background-color: #ffebee; 
+      animation: shake 0.5s ease-in-out; 
+    }
+    
+    @keyframes highlight { 
+      0% { background: #fffacd; } 
+      100% { background: #e8f5e8; } 
+    }
+    
+    @keyframes shake { 
+      0%, 100% { transform: translateX(0); } 
+      25% { transform: translateX(-5px); } 
+      75% { transform: translateX(5px); } 
+    }
+    
+    .answer-key { 
+      font-size: 0.95em; 
+      color: #d32f2f; 
+      margin-top: 8px; 
+      padding: 6px 10px; 
+      background: #ffebee; 
+      border-radius: 6px; 
+      border: 1px dashed #c62828; 
+    }
+    
+    /* Elemen draggable yang lebih besar untuk mudah alih */
+    .draggable { 
+      cursor: grab; 
+      display: inline-block; 
+      margin: 3px; 
+      padding: 12px 16px; 
+      background: #0d6efd; 
+      color: white; 
+      border-radius: 8px; 
+      font-weight: 500; 
+      user-select: none; 
+      transition: all 0.2s; 
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    @media (max-width: 576px) {
+      .draggable {
+        padding: 10px 12px;
+        font-size: 16px;
+        min-width: 50px;
+      }
+    }
+    
+    .draggable:hover { background: #0b5ed7; transform: scale(1.05); }
+    .draggable:active { cursor: grabbing; }
+    
+    .dropzone { 
+      min-height: 70px; 
+      border: 2px dashed #2196f3; 
+      margin: 12px 0; 
+      padding: 12px; 
+      border-radius: 8px; 
+      background: #e3f2fd; 
+      transition: all 0.3s; 
+    }
+    
+    .dropzone:hover { border-color: #0d6efd; background: #bbdefb; }
+    
+    .badge.bg-primary { font-size: 1em; padding: 6px 10px; }
+    .btn-check { margin: 5px 0; }
+    
+    .btn-custom { 
+      border-radius: 10px; 
+      padding: 10px 20px; 
+      font-weight: 600; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+    
+    @media (max-width: 576px) { 
+      .btn-custom { 
+        font-size: 0.95rem; 
+        padding: 8px 16px; 
+      } 
+      
+      body {
+        font-size: 16px;
+        padding: 10px;
+      }
+      
+      .card {
+        padding: 15px;
+      }
+    }
+    
+    .score-badge { 
+      font-weight: bold; 
+      padding: 8px 16px; 
+      border-radius: 50px; 
+      display: inline-block; 
+      margin-top: 10px; 
+    }
+    
+    .score-good { background: #e8f5e8; color: #2e7d32; border: 1px solid #4caf50; }
+    .score-average { background: #fff8e1; color: #9c6d00; border: 1px solid #ffab00; }
+    .score-low { background: #ffebee; color: #c62828; border: 1px solid #f44336; }
+    
+    .footer-buttons { 
+      display: flex; 
+      gap: 10px; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+    }
+    
+    @media (max-width: 576px) {
+      .footer-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .footer-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+    
+    .routine-svg { width: 80px; height: 80px; margin: 10px auto; }
+    
+    .dialog-bubble { 
+      background: #e3f2fd; 
+      border-radius: 18px; 
+      padding: 12px 18px; 
+      margin: 8px 0; 
+      position: relative; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    }
+    
+    .dialog-bubble::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -10px; 
+      left: 20px; 
+      border-width: 10px 10px 0; 
+      border-style: solid; 
+      border-color: #e3f2fd transparent; 
+    }
+    
+    .audio-btn { 
+      background: none; 
+      border: none; 
+      color: #1565c0; 
+      cursor: pointer; 
+      padding: 8px; 
+      border-radius: 50%; 
+      transition: all 0.2s; 
+      font-size: 1.2em;
+    }
+    
+    .audio-btn:hover { background: #e3f2fd; transform: scale(1.1); }
+    .audio-btn:active { transform: scale(0.95); }
+    
+    .loading-spinner { 
+      display: inline-block; 
+      width: 16px; 
+      height: 16px; 
+      border: 2px solid rgba(255,255,255,.3); 
+      border-radius: 50%; 
+      border-top-color: #fff; 
+      animation: spin 1s ease-in-out infinite; 
+      margin-right: 5px; 
+      display: none; 
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* Gaya baru untuk penambahbaikan Google Classroom */
+    .student-info { 
+      background: #e3f2fd; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      border: 2px solid #1565c0; 
+    }
+    
+    .submission-info { 
+      background: #e8f5e9; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      border: 2px solid #4caf50; 
+    }
+    
+    .progress-section { margin: 20px 0; }
+    .completion-badge { font-size: 0.9em; padding: 5px 10px; margin-left: 10px; }
+    .time-tracking { font-size: 0.9em; color: #666; margin-top: 5px; }
+    
+    /* Gaya khas untuk modal panduan LTR */
+    .ltr-guide { direction: ltr; text-align: left; }
+    .ltr-guide ol { padding-left: 20px; }
+    
+    .step-number { 
+      display: inline-block; 
+      width: 24px; 
+      height: 24px; 
+      background: #0d6efd; 
+      color: white; 
+      border-radius: 50%; 
+      text-align: center; 
+      line-height: 24px; 
+      margin-right: 8px; 
+      font-size: 0.8em;
+    }
+    
+    .guide-section { border-left: 3px solid #0d6efd; padding-left: 15px; margin-bottom: 20px; }
+    .guide-icon { font-size: 1.5em; margin-right: 10px; color: #0d6efd; }
+    
+    /* Gaya untuk input yang lebih besar pada mudah alih */
+    @media (max-width: 576px) {
+      .form-control, .form-select {
+        font-size: 16px; /* Mencegah zum automatik pada iOS */
+        padding: 12px;
+      }
+    }
+    
+    /* Animasi khas untuk latihan kata tanya */
+    .question-mark {
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .interrogative-icon {
+      width: 60px;
+      height: 60px;
+      background: #ffc107;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      color: #333;
+      margin: 0 auto 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header dengan animasi SVG -->
+  <div class="text-center mb-4">
+    <div style="position: relative; height: 80px; margin-bottom: 20px;">
+      <svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 100%; height: 100%;">
+        <!-- Animasi bintang -->
+        <polygon points="50,20 55,35 70,35 58,45 63,60 50,50 37,60 42,45 30,35 45,35" fill="#FFD54F" opacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
+        </polygon>
+        <polygon points="200,30 205,40 220,40 208,48 213,60 200,52 187,60 192,48 180,40 195,40" fill="#FFD54F" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.1;0.6" dur="4s" repeatCount="indefinite" />
+        </polygon>
+        
+        <!-- Awan -->
+        <path d="M100,40 C105,30 115,30 120,40 C125,30 135,30 140,40 C145,30 155,30 160,40 C160,45 150,50 140,50 C130,50 120,45 100,45 Z" fill="url(#cloudGradient)" />
+        <defs>
+          <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#BBDEFB;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#E3F2FD;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        
+        <!-- Ikon tanya -->
+        <g transform="translate(250, 40)">
+          <circle cx="0" cy="0" r="20" fill="#FFC107" />
+          <text x="0" y="5" text-anchor="middle" fill="#333" font-weight="bold" font-size="20">؟</text>
+        </g>
+      </svg>
+    </div>
+    <h2><i class="bi bi-question-circle"></i> Latihan Interaktif: <span class="question-mark">أسماء الاستفهام</span></h2>
+    <p class="text-muted">Latihan interaktif untuk Google Classroom - Kata Tanya Bahasa Arab</p>
+  </div>
+
+  <!-- Bahagian Maklumat Pelajar -->
+  <div class="card student-info">
+    <h4><i class="bi bi-person-circle"></i> Maklumat Pelajar</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="studentName" class="form-label">:Nama Penuh</label>
+          <input type="text" class="form-control" id="studentName" placeholder="Masukkan nama penuh anda (RUMI)">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="studentId" class="form-label">:No Matrik Pelajar</label>
+          <input type="text" class="form-control" id="studentId" placeholder="Contoh: 254200001">
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="courseCode" class="form-label">:Kod Kursus (jika ada)</label>
+      <input type="text" class="form-control" id="courseCode" placeholder="Kod yang diberikan oleh guru">
+    </div>
+  </div>
+
+  <!-- Penjejakan Kemajuan -->
+  <div class="progress-section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5>Kemajuan Latihan</h5>
+      <span id="completionPercentage" class="badge bg-primary completion-badge">0% Selesai</span>
+    </div>
+    <div class="progress mb-3" style="height: 20px;">
+      <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+    </div>
+    <div id="timeTracking" class="time-tracking">
+      <i class="bi bi-clock"></i> Masa digunakan: <span id="timeSpent">0 minit</span>
+    </div>
+  </div>
+
+  <!-- Navigasi Tab - Responsif -->
+  <ul class="nav nav-tabs mb-4 flex-md-row flex-column" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active btn-custom" id="tab1" data-bs-toggle="tab" data-bs-target="#section1" type="button" role="tab">
+        <i class="bi bi-book"></i> المفردات
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-custom" id="tab2" data-bs-toggle="tab" data-bs-target="#section2" type="button" role="tab">
+        <i class="bi bi-sort-alpha-down"></i> رتب الكلمات
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-custom" id="tab3" data-bs-toggle="tab" data-bs-target="#section3" type="button" role="tab">
+        <i class="bi bi-chat-left-text"></i> أكمل الحوار
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-custom" id="tab4" data-bs-toggle="tab" data-bs-target="#section4" type="button" role="tab">
+        <i class="bi bi-question-circle"></i> اختر الإجابة
+      </button>
+    </li>
+  </ul>
+  
+  <!-- Kandungan Tab -->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="section1" role="tabpanel">
+      <div class="card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4><i class="bi bi-book"></i> اختر المعنى الصحيح لكلمة الاستفهام:</h4>
+          <button class="btn btn-sm btn-outline-primary" onclick="playAllAudio()">
+            <i class="bi bi-play-circle"></i> Main Semua Audio
+          </button>
+        </div>
+        <div id="vocab-questions"></div>
+        <button class="btn btn-primary btn-custom mt-3" onclick="checkVocabAnswers()">
+          <i class="bi bi-check2-circle"></i> تحقق من الإجابة
+        </button>
+        <div id="vocab-score" class="mt-3"></div>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="section2" role="tabpanel">
+      <div class="card">
+        <h4><i class="bi bi-sort-alpha-down"></i> رتب الكلمات لتكون سؤالاً صحيحاً:</h4>
+        <div id="reorder-questions"></div>
+        <button class="btn btn-primary btn-custom mt-3" onclick="checkReorderAnswers()">
+          <i class="bi bi-check2-circle"></i> تحقق من الإجابة
+        </button>
+        <div id="reorder-score" class="mt-3"></div>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="section3" role="tabpanel">
+      <div class="card">
+        <h4><i class="bi bi-chat-left-text"></i> أكمل الحوار بكلمة الاستفهام المناسبة:</h4>
+        <div id="dialog-questions"></div>
+        <button class="btn btn-primary btn-custom mt-3" onclick="checkDialogAnswers()">
+          <i class="bi bi-check2-circle"></i> تحقق من الإجابة
+        </button>
+        <div id="dialog-score" class="mt-3"></div>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="section4" role="tabpanel">
+      <div class="card">
+        <h4><i class="bi bi-question-circle"></i> اختر الإجابة الصحيحة:</h4>
+        <div id="mcq-questions"></div>
+        <button class="btn btn-primary btn-custom mt-3" onclick="checkMcqAnswers()">
+          <i class="bi bi-check2-circle"></i> تحقق من الإجابة
+        </button>
+        <div id="mcq-score" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bahagian Bantuan dan Tips -->
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-warning">
+          <h6><i class="bi bi-lightbulb"></i> Tips Pantas</h6>
+        </div>
+        <div class="card-body">
+          <ul class="small">
+            <li>Gunakan <strong>Chrome</strong> atau <strong>Edge</strong> untuk prestasi terbaik</li>
+            <li>Klik butang <strong>🔊</strong> untuk dengar sebutan Arab</li>
+            <li>Simpan kemajuan jika tidak dapat habiskan dalam satu sesi</li>
+            <li>Pastikan internet stabil semasa membuat latihan</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h6><i class="bi bi-question-circle"></i> Bantuan</h6>
+        </div>
+        <div class="card-body text-center">
+          <button class="btn btn-outline-info mb-2" onclick="showSubmissionGuide()">
+            <i class="bi bi-play-circle"></i> Lihat Panduan
+          </button>
+          <br>
+          <button class="btn btn-outline-secondary btn-sm" onclick="downloadStepByStepGuide()">
+            <i class="bi bi-download"></i> Muat Turun Arahan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Tracking Enhanced -->
+  <div class="card mt-3">
+    <div class="card-header bg-light">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="mb-0"><i class="bi bi-graph-up"></i> Status Penyelesaian</h6>
+        <span id="completionStatus" class="badge bg-warning">Sedang Berjalan</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="progress mb-2" style="height: 20px;">
+        <div id="enhancedProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+             role="progressbar" style="width: 0%">0%</div>
+      </div>
+      <div class="row text-center small">
+        <div class="col-3">
+          <span id="vocab-status" class="badge bg-secondary">❌ Kosa Kata</span>
+        </div>
+        <div class="col-3">
+          <span id="reorder-status" class="badge bg-secondary">❌ Susun Ayat</span>
+        </div>
+        <div class="col-3">
+          <span id="dialog-status" class="badge bg-secondary">❌ Dialog</span>
+        </div>
+        <div class="col-3">
+          <span id="mcq-status" class="badge bg-secondary">❌ Pilihan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bahagian Penghantaran Google Classroom -->
+  <div class="card submission-info mt-4">
+    <h4><i class="bi bi-google"></i> Penghantaran ke Google Classroom</h4>
+    <p>Setelah selesai semua bahagian latihan, sila muat turun fail jawapan anda dan hantar melalui Google Classroom.</p>
+    
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row">
+      <div class="mb-3 mb-md-0">
+        <h5>Status Penghantaran</h5>
+        <div id="submissionStatus" class="alert alert-warning" role="alert">
+          <i class="bi bi-exclamation-triangle"></i> Latihan belum selesai sepenuhnya.
+        </div>
+      </div>
+      <div class="text-center text-md-end">
+        <button class="btn btn-success btn-custom" onclick="generateSubmissionFile()" id="submitButton" disabled>
+          <i class="bi bi-cloud-arrow-down"></i> Jana Fail Penghantaran
+        </button>
+        <p class="small mt-2">Muat turun fail dan hantar ke Google Classroom</p>
+      </div>
+    </div>
+    
+    <div class="footer-buttons">
+      <button class="btn btn-success btn-custom" onclick="saveProgress()">
+        <i class="bi bi-save"></i> Simpan Kemajuan
+      </button>
+      <button class="btn btn-secondary btn-custom" onclick="loadProgress()">
+        <i class="bi bi-folder-symlink"></i> Muat Semula Kemajuan
+      </button>
+      <button class="btn btn-primary btn-custom" onclick="printResults()">
+        <i class="bi bi-printer"></i> Cetak Keputusan
+      </button>
+      <button class="btn btn-info btn-custom" onclick="downloadTxt()">
+        <i class="bi bi-file-earmark-text"></i> Muat Turun TXT
+      </button>
+      <button class="btn btn-info btn-custom" onclick="downloadCsv()">
+        <i class="bi bi-file-earmark-spreadsheet"></i> Muat Turun CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Panduan Penghantaran -->
+  <div class="modal fade" id="submissionGuide" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ltr-guide">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Panduan Penghantaran Lengkap</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- FASA 1: LENGKAPKAN LATIHAN -->
+            <div class="col-md-6">
+              <div class="guide-section">
+                <h6 class="d-flex align-items-center">
+                  <i class="bi bi-laptop guide-icon"></i>
+                  Fasa 1: Lengkapkan Latihan di Website
+                </h6>
+                <ol class="list-unstyled">
+                  <li class="mb-2">
+                    <span class="step-number">1</span>
+                    <strong>Isi Maklumat Pelajar</strong>
+                    <div class="small text-muted">Nama penuh, No Matrik pelajar dan kod kursus</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">2</span>
+                    <strong>Jawab Semua Bahagian</strong>
+                    <div class="small text-muted">4 bahagian: Kosa Kata, Susun Ayat, Dialog & Soalan Pilihan</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">3</span>
+                    <strong>Klik "Semak Jawapan"</strong>
+                    <div class="small text-muted">Untuk setiap bahagian setelah selesai</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">4</span>
+                    <strong>Pastikan Status Hijau</strong>
+                    <div class="small text-muted">Semua bahagian mesti berstatus ✅</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">5</span>
+                    <strong>Klik "Jana Fail Penghantaran"</strong>
+                    <div class="small text-muted">Fail JSON akan dimuat turun automatik</div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            
+            <!-- FASA 2: HANTAR KE GOOGLE CLASSROOM -->
+            <div class="col-md-6">
+              <div class="guide-section">
+                <h6 class="d-flex align-items-center">
+                  <i class="bi bi-google guide-icon"></i>
+                  Fasa 2: Hantar ke Google Classroom
+                </h6>
+                <ol class="list-unstyled">
+                  <li class="mb-2">
+                    <span class="step-number">1</span>
+                    <strong>Buka Google Classroom</strong>
+                    <div class="small text-muted">Login ke akaun Universiti anda</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">2</span>
+                    <strong>Cari Tugasan "أسماء الاستفهام"</strong>
+                    <div class="small text-muted">Dalam kelas yang betul</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">3</span>
+                    <strong>Klik "Tambah atau buat"</strong>
+                    <div class="small text-muted">Butang di bahagian tugasan</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">4</span>
+                    <strong>Pilih "Fail" → "Muat naik"</strong>
+                    <div class="small text-muted">Cari fail JSON yang dimuat turun</div>
+                  </li>
+                  <li class="mb-2">
+                    <span class="step-number">5</span>
+                    <strong>Klik "Serahkan"</strong>
+                    <div class="small text-muted">Untuk hantar tugasan secara rasmi</div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          
+          <!-- INFO TAMBAHAN -->
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="alert alert-info">
+                <div class="d-flex">
+                  <i class="bi bi-info-circle fs-4 me-3"></i>
+                  <div>
+                    <h6 class="alert-heading">Maklumat Penting</h6>
+                    <ul class="mb-0 small">
+                      <li>Fail JSON mengandungi <strong>semua jawapan dan markah</strong> anda</li>
+                      <li>Guru akan menerima fail yang sama untuk semakan</li>
+                      <li>Pastikan nama fail mengandungi nama anda untuk pengenalan</li>
+                      <li>Jika ada masalah, hubungi guru melalui email atau Google Classroom</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CONTOH FAIL -->
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="card border-secondary">
+                <div class="card-header bg-light py-2">
+                  <h6 class="mb-0"><i class="bi bi-file-earmark-code"></i> Contoh Nama Fail</h6>
+                </div>
+                <div class="card-body py-3">
+                  <code class="small">Penghantaran_AHMAD_BIN_ABDULLAH_Asma-al-istifham_2024-03-15.json</code>
+                  <div class="small text-muted mt-1">
+                    Format: Penghantaran_[NAMA]_[KOD_KURSUS]_[TARIKH].json
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" onclick="downloadStepByStepGuide()">
+            <i class="bi bi-download"></i> Muat Turun Panduan PDF
+          </button>
+          <button type="button" class="btn btn-success" onclick="showVisualGuide()">
+            <i class="bi bi-images"></i> Panduan Visual
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Kejayaan -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content ltr-guide">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title"><i class="bi bi-check-circle"></i> Berjaya Dijana!</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3">
+            <i class="bi bi-cloud-check-fill text-success" style="font-size: 3rem;"></i>
+          </div>
+          <p class="text-center"><strong>Fail berjaya dimuat turun!</strong></p>
+          
+          <div class="alert alert-warning">
+            <h6 class="d-flex align-items-center">
+              <i class="bi bi-arrow-right-circle me-2"></i>
+              Seterusnya, hantar ke Google Classroom:
+            </h6>
+            <ol class="small mb-0">
+              <li>Buka <strong>Google Classroom</strong></li>
+              <li>Cari tugasan <strong>"أسماء الاستفهام"</strong></li>
+              <li>Klik <strong>"Tambah atau buat"</strong> → <strong>"Fail"</strong></li>
+              <li>Pilih fail <strong>JSON</strong> yang dimuat turun</li>
+              <li>Klik <strong>"Serahkan"</strong></li>
+            </ol>
+          </div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-primary btn-sm" onclick="showSubmissionGuide()">
+              <i class="bi bi-question-circle"></i> Lihat Panduan Lengkap
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Teruskan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Panduan Visual -->
+  <div class="modal fade" id="visualGuide" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content ltr-guide">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title"><i class="bi bi-images"></i> Panduan Visual</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <h6>Langkah di Website</h6>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="placeholder-visual bg-light rounded p-4 mb-3">
+                    <i class="bi bi-laptop" style="font-size: 3rem; color: #6c757d;"></i>
+                    <p class="mt-2 small">Gambar ilustrasi langkah-langkah di website</p>
+                  </div>
+                  <ol class="text-start small">
+                    <li>Isi maklumat pelajar</li>
+                    <li>Lengkapkan 4 bahagian latihan</li>
+                    <li>Klik "تحقق من الإجابة" untuk menyemak jawapan di setiap bahagian</li>
+                    <li>Status hijau menunjukkan jawapan betul</li>
+                    <li>Klik "Jana Fail Penghantaran"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 text-center">
+              <h6>Langkah di Google Classroom</h6>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="placeholder-visual bg-light rounded p-4 mb-3">
+                    <i class="bi bi-phone" style="font-size: 3rem; color: #6c757d;"></i>
+                    <p class="mt-2 small">Gambar ilustrasi langkah-langkah di Classroom</p>
+                  </div>
+                  <ol class="text-start small">
+                    <li>Buka Google Classroom</li>
+                    <li>Cari tugasan أسماء الاستفهام</li>
+                    <li>Klik "Tambah atau buat"</li>
+                    <li>Pilih "Fail" → "Muat naik"</li>
+                    <li>Klik "Serahkan"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data dan fungsi latihan أسماء الاستفهام
+    let scores = { vocab: 0, reorder: 0, dialog: 0, mcq: 0 };
+    let startTime = new Date();
+    let timeSpent = 0;
+    let progressInterval;
+    
+    // Data untuk bahagian kosa kata
+    const vocabData = [
+      { arabic: "مَنْ", options: ["Apa", "Siapa", "Bila"], answer: "Siapa",
+        svg: '<div class="interrogative-icon">مَنْ</div>' },
+      { arabic: "مَا", options: ["Apa", "Di mana", "Bagaimana"], answer: "Apa",
+        svg: '<div class="interrogative-icon">مَا</div>' },
+      { arabic: "مَتَى", options: ["Mengapa", "Di mana", "Bila"], answer: "Bila",
+        svg: '<div class="interrogative-icon">مَتَى</div>' },
+      { arabic: "أَيْنَ", options: ["Berapa", "Di mana", "Bagaimana"], answer: "Di mana",
+        svg: '<div class="interrogative-icon">أَيْنَ</div>' },
+      { arabic: "كَيْفَ", options: ["Bagaimana", "Mengapa", "Bila"], answer: "Bagaimana",
+        svg: '<div class="interrogative-icon">كَيْفَ</div>' },
+      { arabic: "لِمَاذَا", options: ["Apa", "Berapa", "Mengapa"], answer: "Mengapa",
+        svg: '<div class="interrogative-icon">لِمَاذَا</div>' },
+      { arabic: "كَمْ", options: ["Berapa", "Siapa", "Di mana"], answer: "Berapa",
+        svg: '<div class="interrogative-icon">كَمْ</div>' },
+      { arabic: "أَيُّ", options: ["Bila", "Bagaimana", "Yang mana"], answer: "Yang mana",
+        svg: '<div class="interrogative-icon">أَيُّ</div>' },
+      { arabic: "مَاذَا", options: ["Apa", "Siapa", "Di mana"], answer: "Apa",
+        svg: '<div class="interrogative-icon">مَاذَا</div>' },
+      { arabic: "أَيَّانَ", options: ["Bilakah", "Kenapakah", "Apakah"], answer: "Bilakah",
+        svg: '<div class="interrogative-icon">أَيَّانَ</div>' }
+    ];
+
+    // Data untuk bahagian susunan ayat
+    const reorderData = [
+      { words: [" هَذَا", "مَنْ", "؟"], correct: "مَنْ هَذَا؟", translation: "Siapa ini?",
+        svg: '<div class="interrogative-icon">مَنْ</div>' },
+      { words: ["أَيْنَ", "الْكِتَابُ", "؟"], correct: "أَيْنَ الْكِتَابُ؟", translation: "Di mana buku?",
+        svg: '<div class="interrogative-icon">أَيْنَ</div>' },
+      { words: [" إِلَى", "تَذْهَبُ", "مَتَى", "الْمَدْرَسَةِ", "؟"], correct: "مَتَى تَذْهَبُ إِلَى الْمَدْرَسَةِ؟", translation: "Bila awak pergi ke sekolah?",
+        svg: '<div class="interrogative-icon">مَتَى</div>' },
+      { words: ["حَالُكَ", "كَيْفَ ", "؟"], correct: "كَيْفَ حَالُكَ؟", translation: "Apa khabar?",
+        svg: '<div class="interrogative-icon">كَيْفَ</div>' },
+      { words: ["كَمْ", "عُمْرُكَ", "؟"], correct: "كَمْ عُمْرُكَ؟", translation: "Berapa umur awak?",
+        svg: '<div class="interrogative-icon">كَمْ</div>' },
+      { words: ["تضحك", "لِمَاذَا", "؟"], correct: "لِمَاذَا تضحك؟", translation: "Mengapa awak ketawa?",
+        svg: '<div class="interrogative-icon">لِمَاذَا</div>' }
+    ];
+
+    // Data untuk bahagian dialog
+    const dialogData = [
+      { dialogue: ["______ اسمك؟", "اسمي أحمد."], options: ["مَا", "مَنْ", "كَيْفَ"], answer: "مَا", translation: "Apa",
+        svg: '<div class="interrogative-icon">مَا</div>' },
+      { dialogue: ["______ تَعِيشُ؟", "أَعِيشُ فِي كُوالَالَمْبُور."], options: ["مَتَى", "أَيْنَ ", "لِمَاذَا"], answer: "أَيْنَ", translation: "Di mana",
+        svg: '<div class="interrogative-icon">أَيْنَ</div>' },
+      { dialogue: ["______ تَذْهَبُ إِلَى الْمَكْتَبَةِ؟", "أَذْهَبُ يَوْمَ السَّبْتِ."], options: ["مَتَى", "كَمْ", "كَيْفَ"], answer: "مَتَى", translation: "Bila",
+        svg: '<div class="interrogative-icon">مَتَى</div>' },
+      { dialogue: ["______ هَذَا الْوَلَدُ؟", "هُوَ أَخِي."], options: ["أَيْنَ", "مَنْ", "مَا"], answer: "مَنْ", translation: "Siapa",
+        svg: '<div class="interrogative-icon">مَنْ</div>' },
+      { dialogue: ["______ سَعْرُ هَذَا الْكِتَابِ؟", "سَعْرُهُ عَشَرَةُ رِينَغِيتْ."], options: ["كَمْ", "كَيْفَ", "لِمَاذَا"], answer: "كَمْ", translation: "Berapa",
+        svg: '<div class="interrogative-icon">كَمْ</div>' }
+    ];
+
+    // Data untuk bahagian soalan pilihan
+    const mcqData = [
+      { question: "أَيُّ كَلِمَةِ اسْتِفْهَامٍ تَعْنِي 'Siapa'؟", options: ["مَا", "مَنْ", "أَيْنَ"], answer: "مَنْ", translation: "Siapa",
+        svg: '<div class="interrogative-icon">مَنْ</div>' },
+      { question: "مَتَى نَسْتَخْدِمُ كَلِمَةَ 'كَيْفَ'؟", options: ["لِلسُّؤَالِ عَنِ الْوَقْتِ", "لِلسُّؤَالِ عَنِ الْحَالِ", "لِلسُّؤَالِ عَنِ السَّبَبِ"], answer: "لِلسُّؤَالِ عَنِ الْحَالِ", translation: "Untuk bertanya tentang keadaan",
+        svg: '<div class="interrogative-icon">كَيْفَ</div>' },
+      { question: "أَيُّ جُمْلَةٍ صَحِيحَةٌ؟", options: ["مَا هَذَا؟", "مَنْ هَذَا؟", "كَيْفَ هَذَا؟"], answer: "مَا هَذَا؟", translation: "Apa ini?",
+        svg: '<div class="interrogative-icon">مَا</div>' },
+      { question: "مَاذَا تَعْنِي كَلِمَةُ 'لِمَاذَا'؟", options: ["Mengapa", "Bagaimana", "Bila"], answer: "Mengapa", translation: "Mengapa",
+        svg: '<div class="interrogative-icon">لِمَاذَا</div>' },
+      { question: "كَيْفَ نَقُولُ 'Di mana rumah kamu?' بِاللُّغَةِ الْعَرَبِيَّةِ؟", options: ["مَتَى بَيْتُكَ؟", "أَيْنَ بَيْتُكَ؟", "كَيْفَ بَيْتُكَ؟"], answer: "أَيْنَ بَيْتُكَ؟", translation: "Di mana rumah kamu?",
+        svg: '<div class="interrogative-icon">أَيْنَ</div>' }
+    ];
+
+    // ====================
+    // FUNGSI ENHANCED UNTUK PELAJAR
+    // ====================
+
+    // Fungsi untuk guidance pelajar
+    function showSubmissionGuide() {
+        const modal = new bootstrap.Modal(document.getElementById('submissionGuide'));
+        modal.show();
+    }
+
+    // Fungsi untuk menunjukkan panduan visual
+    function showVisualGuide() {
+        const modal = new bootstrap.Modal(document.getElementById('visualGuide'));
+        modal.show();
+    }
+
+    // Fungsi untuk download panduan step-by-step
+    function downloadStepByStepGuide() {
+        const content = `PANDUAN LENGKAP - HANTAR KEPUTUSAN أسماء الاستفهام KE GOOGLE CLASSROOM
+            
+FASA 1: LENGKAPKAN LATIHAN DI WEBSITE
+1. Isi Maklumat Pelajar - Nama penuh, ID pelajar dan kod kursus
+2. Jawab Semua Bahagian - 4 bahagian: Kosa Kata, Susun Ayat, Dialog & Soalan Pilihan
+3. Klik "تحقق من الإجابة" - Untuk setiap bahagian setelah selesai
+4. Status Hijau - Menunjukkan jawapan betul ✅
+5. Klik "Jana Fail Penghantaran" - Fail JSON akan dimuat turun automatik
+
+FASA 2: HANTAR KE GOOGLE CLASSROOM
+1. Buka Google Classroom - Login ke akaun sekolah anda
+2. Cari Tugasan "أسماء الاستفهام" - Dalam kelas yang betul
+3. Klik "Tambah atau buat" - Butang di bahagian tugasan
+4. Pilih "Fail" → "Muat naik" - Cari fail JSON yang dimuat turun
+5. Klik "Serahkan" - Untuk hantar tugasan secara rasmi
+
+MAKLUMAT PENTING:
+- Fail JSON mengandungi semua jawapan dan markah anda
+- Guru akan menerima fail yang sama untuk semakan
+- Pastikan nama fail mengandungi nama anda untuk pengenalan
+- Jika ada masalah, hubungi guru melalui email atau Google Classroom
+
+CONTOH NAMA FAIL:
+Penghantaran_AHMAD_BIN_ABDULLAH_Asma-al-istifham_2024-03-15.json
+
+BANTUAN:
+- Email guru: [SILA ISI EMAIL GURU]
+- Group WhatsApp kelas
+
+Tarikh: ${new Date().toLocaleDateString('ms-MY')}
+        `;
+        
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Panduan_Penghantaran_${new Date().toISOString().slice(0,10)}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('Panduan telah dimuat turun. Sila buka fail teks untuk membaca panduan lengkap.');
+    }
+
+    function showSubmissionSuccess(studentName, fileName) {
+        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+    }
+
+    // Enhanced progress tracking function
+    function updateProgress() {
+        let completed = 0;
+        const totalSections = 4;
+        
+        // Update status badges
+        const vocabStatus = document.getElementById('vocab-status');
+        const reorderStatus = document.getElementById('reorder-status');
+        const dialogStatus = document.getElementById('dialog-status');
+        const mcqStatus = document.getElementById('mcq-status');
+        const completionStatus = document.getElementById('completionStatus');
+        
+        if (scores.vocab > 0) {
+            completed++;
+            if (vocabStatus) {
+                vocabStatus.className = 'badge bg-success';
+                vocabStatus.innerHTML = '✅ Kosa Kata';
+            }
+        }
+        
+        if (scores.reorder > 0) {
+            completed++;
+            if (reorderStatus) {
+                reorderStatus.className = 'badge bg-success';
+                reorderStatus.innerHTML = '✅ Susun Ayat';
+            }
+        }
+        
+        if (scores.dialog > 0) {
+            completed++;
+            if (dialogStatus) {
+                dialogStatus.className = 'badge bg-success';
+                dialogStatus.innerHTML = '✅ Dialog';
+            }
+        }
+        
+        if (scores.mcq > 0) {
+            completed++;
+            if (mcqStatus) {
+                mcqStatus.className = 'badge bg-success';
+                mcqStatus.innerHTML = '✅ Pilihan';
+            }
+        }
+        
+        const percentage = Math.round((completed / totalSections) * 100);
+        
+        // Update progress bar
+        const progressBar = document.getElementById('enhancedProgressBar');
+        const originalProgressBar = document.getElementById('progressBar');
+        
+        if (progressBar) {
+            progressBar.style.width = `${percentage}%`;
+            progressBar.textContent = `${percentage}%`;
+            progressBar.setAttribute('aria-valuenow', percentage);
+            
+            // Update progress bar color based on completion
+            if (percentage === 100) {
+                progressBar.className = 'progress-bar bg-success progress-bar-striped';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-success';
+                    completionStatus.textContent = 'Sedia Hantar!';
+                }
+            } else if (percentage >= 50) {
+                progressBar.className = 'progress-bar bg-warning progress-bar-striped progress-bar-animated';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-warning';
+                    completionStatus.textContent = 'Separuh Siap';
+                }
+            } else {
+                progressBar.className = 'progress-bar bg-info progress-bar-striped progress-bar-animated';
+                if (completionStatus) {
+                    completionStatus.className = 'badge bg-info';
+                    completionStatus.textContent = 'Sedang Berjalan';
+                }
+            }
+        }
+        
+        // Update original progress bar
+        if (originalProgressBar) {
+            originalProgressBar.style.width = `${percentage}%`;
+            originalProgressBar.textContent = `${percentage}%`;
+            originalProgressBar.setAttribute('aria-valuenow', percentage);
+        }
+        
+        // Update completion percentage
+        const completionPercentage = document.getElementById('completionPercentage');
+        if (completionPercentage) {
+            completionPercentage.textContent = `${percentage}% Selesai`;
+        }
+        
+        // Update submit button status
+        const submitButton = document.getElementById('submitButton');
+        const submissionStatus = document.getElementById('submissionStatus');
+        
+        if (percentage === 100) {
+            if (submitButton) submitButton.disabled = false;
+            if (submissionStatus) {
+                submissionStatus.className = 'alert alert-success';
+                submissionStatus.innerHTML = '<i class="bi bi-check-circle"></i> Semua bahagian selesai! Klik "Jana Fail Penghantaran".';
+            }
+        } else {
+            if (submitButton) submitButton.disabled = true;
+            if (submissionStatus) {
+                submissionStatus.className = 'alert alert-warning';
+                submissionStatus.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${completed}/${totalSections} bahagian selesai. Selesaikan semua bahagian.`;
+            }
+        }
+        
+        return percentage;
+    }
+
+    // Enhanced submission function
+    function generateSubmissionFile() {
+        const studentName = document.getElementById('studentName').value || 'Nama_Tidak_Diberikan';
+        const studentId = document.getElementById('studentId').value || 'ID_Tidak_Diberikan';
+        
+        // Check if all sections are completed
+        const progress = updateProgress();
+        if (progress < 100) {
+            alert('Sila lengkapkan SEMUA bahagian latihan terlebih dahulu!\n\nPastikan anda telah klik "تحقق من الإجابة" untuk setiap bahagian.');
+            return;
+        }
+        
+        // Continue dengan fungsi asal...
+        const courseCode = document.getElementById('courseCode').value || 'Tiada_Kod';
+        
+        const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
+        const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
+        const percent = (total / max * 100).toFixed(1);
+        
+        const studentAnswers = {
+            studentInfo: {
+                name: studentName,
+                id: studentId,
+                courseCode: courseCode,
+                submissionTime: new Date().toLocaleString('ms-MY'),
+                timeSpent: `${timeSpent} minit`,
+                pageUrl: window.location.href
+            },
+            scores: {
+                vocab: scores.vocab,
+                reorder: scores.reorder,
+                dialog: scores.dialog,
+                mcq: scores.mcq,
+                total: total,
+                maxPossible: max,
+                percentage: percent
+            },
+            answers: {
+                vocab: collectVocabAnswers(),
+                reorder: collectReorderAnswers(),
+                dialog: collectDialogAnswers(),
+                mcq: collectMcqAnswers()
+            }
+        };
+        
+        const jsonData = JSON.stringify(studentAnswers, null, 2);
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const fileName = `Penghantaran_${studentName.replace(/\s+/g, '_')}_${courseCode || 'Asma-al-istifham'}_${new Date().toISOString().slice(0,10)}.json`;
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Show success message dengan arahan selanjutnya
+        showSubmissionSuccess(studentName, fileName);
+    }
+
+    // Fungsi untuk memulakan penjejakan masa
+    function startTimeTracking() {
+      startTime = new Date();
+      progressInterval = setInterval(updateTimeSpent, 60000); // Update setiap minit
+    }
+    
+    // Fungsi untuk mengemas kini masa yang digunakan
+    function updateTimeSpent() {
+      const now = new Date();
+      timeSpent = Math.floor((now - startTime) / 60000); // dalam minit
+      document.getElementById('timeSpent').textContent = `${timeSpent} minit`;
+    }
+    
+    // Fungsi untuk mengumpul jawapan bahagian kosa kata
+    function collectVocabAnswers() {
+      const answers = [];
+      vocabData.forEach((item, index) => {
+        const select = document.getElementById(`vocab-q${index}`);
+        answers.push({
+          question: item.arabic,
+          studentAnswer: select ? select.value : 'Tidak dijawab',
+          correctAnswer: item.answer
+        });
+      });
+      return answers;
+    }
+    
+    // Fungsi untuk mengumpul jawapan bahagian susunan
+    function collectReorderAnswers() {
+      const answers = [];
+      reorderData.forEach((item, index) => {
+        const dropzone = document.getElementById(`drop-${index}`);
+        const words = dropzone ? Array.from(dropzone.querySelectorAll(".badge")).map(el => el.textContent.trim()) : [];
+        answers.push({
+          question: item.words.join(', '),
+          studentAnswer: words.join(' '),
+          correctAnswer: item.correct,
+          isCorrect: words.join(' ') === item.correct
+        });
+      });
+      return answers;
+    }
+    
+    // Fungsi untuk mengumpul jawapan bahagian dialog
+    function collectDialogAnswers() {
+      const answers = [];
+      dialogData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="dialog-q${index}"]:checked`);
+        answers.push({
+          question: item.dialogue.join(' '),
+          studentAnswer: selected ? selected.value : 'Tidak dijawab',
+          correctAnswer: item.answer
+        });
+      });
+      return answers;
+    }
+    
+    // Fungsi untuk mengumpul jawapan bahagian pilihan
+    function collectMcqAnswers() {
+      const answers = [];
+      mcqData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="mcq-q${index}"]:checked`);
+        answers.push({
+          question: item.question,
+          studentAnswer: selected ? selected.value : 'Tidak dijawab',
+          correctAnswer: item.answer
+        });
+      });
+      return answers;
+    }
+    
+    // Fungsi untuk menyimpan kemajuan
+    function saveProgress() {
+      const progressData = {
+        studentName: document.getElementById('studentName').value,
+        studentId: document.getElementById('studentId').value,
+        courseCode: document.getElementById('courseCode').value,
+        scores: scores,
+        timeSpent: timeSpent,
+        answers: {
+          vocab: collectVocabAnswers(),
+          reorder: collectReorderAnswers(),
+          dialog: collectDialogAnswers(),
+          mcq: collectMcqAnswers()
+        },
+        timestamp: new Date().toISOString()
+      };
+      
+      localStorage.setItem('asmaIstifhamProgress', JSON.stringify(progressData));
+      alert('Kemajuan telah disimpan. Anda boleh meneruskan latihan ini kemudian.');
+    }
+    
+    // Fungsi untuk memuatkan semula kemajuan
+    function loadProgress() {
+      const savedProgress = localStorage.getItem('asmaIstifhamProgress');
+      if (!savedProgress) {
+        alert('Tiada data kemajuan yang disimpan ditemui.');
+        return;
+      }
+      
+      const progressData = JSON.parse(savedProgress);
+      
+      // Isi maklumat pelajar
+      document.getElementById('studentName').value = progressData.studentName || '';
+      document.getElementById('studentId').value = progressData.studentId || '';
+      document.getElementById('courseCode').value = progressData.courseCode || '';
+      
+      // Isi skor
+      scores = progressData.scores;
+      
+      // Isi masa
+      timeSpent = progressData.timeSpent || 0;
+      document.getElementById('timeSpent').textContent = `${timeSpent} minit`;
+      
+      // Isi jawapan
+      loadVocabAnswers(progressData.answers.vocab);
+      loadReorderAnswers(progressData.answers.reorder);
+      loadDialogAnswers(progressData.answers.dialog);
+      loadMcqAnswers(progressData.answers.mcq);
+      
+      // Kemas kini UI
+      updateProgress();
+      alert('Kemajuan sebelumnya telah dimuatkan. Sila semak semua bahagian dan hantar jika sudah selesai.');
+    }
+    
+    // Fungsi bantu untuk memuatkan jawapan kosa kata
+    function loadVocabAnswers(answers) {
+      answers.forEach((answer, index) => {
+        const select = document.getElementById(`vocab-q${index}`);
+        if (select && answer.studentAnswer && answer.studentAnswer !== 'Tidak dijawab') {
+          select.value = answer.studentAnswer;
+        }
+      });
+    }
+    
+    // Fungsi bantu untuk memuatkan jawapan susunan
+    function loadReorderAnswers(answers) {
+      answers.forEach((answer, index) => {
+        const dropzone = document.getElementById(`drop-${index}`);
+        if (dropzone && answer.studentAnswer && answer.studentAnswer !== 'Tidak dijawab') {
+          dropzone.innerHTML = '';
+          answer.studentAnswer.split(' ').forEach(word => {
+            const span = document.createElement("span");
+            span.className = "badge bg-primary me-1 mb-1";
+            span.textContent = word;
+            span.draggable = true;
+            span.dataset.word = word;
+            span.ondragstart = drag;
+            dropzone.appendChild(span);
+          });
+        }
+      });
+    }
+    
+    // Fungsi bantu untuk memuatkan jawapan dialog
+    function loadDialogAnswers(answers) {
+      answers.forEach((answer, index) => {
+        if (answer.studentAnswer && answer.studentAnswer !== 'Tidak dijawab') {
+          const radio = document.querySelector(`input[name="dialog-q${index}"][value="${answer.studentAnswer}"]`);
+          if (radio) radio.checked = true;
+        }
+      });
+    }
+    
+    // Fungsi bantu untuk memuatkan jawapan pilihan
+    function loadMcqAnswers(answers) {
+      answers.forEach((answer, index) => {
+        if (answer.studentAnswer && answer.studentAnswer !== 'Tidak dijawab') {
+          const radio = document.querySelector(`input[name="mcq-q${index}"][value="${answer.studentAnswer}"]`);
+          if (radio) radio.checked = true;
+        }
+      });
+    }
+
+    // ====================
+    // FUNGSI-FUNGSI UTAMA LATIHAN
+    // ====================
+
+    function createVocabQuiz() {
+      const container = document.getElementById("vocab-questions");
+      if (!container) return;
+      
+      container.innerHTML = "";
+      vocabData.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+        div.innerHTML = `
+          <div class="p-3 border rounded bg-light d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
+              ${item.svg}
+              <div class="mt-2">
+                <strong>${item.arabic}</strong>
+                <button class="audio-btn" onclick="speakArabic('${item.arabic}', this)">
+                  <span class="loading-spinner" id="spinner-${index}"></span>
+                  <i class="bi bi-volume-up"></i>
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow-1" dir="ltr" style="padding: 10px 20px;">
+              <label class="form-label"><strong>${index + 1}. Pilih maksud yang betul:</strong></label>
+              <select class="form-select mt-2" id="vocab-q${index}">
+                <option value="">-- Pilih jawapan --</option>
+                ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+              </select>
+              <div class="answer-key" id="vocab-answer-${index}" style="display: none;"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function speakArabic(text, button) {
+      const index = Array.from(button.closest('.d-flex').querySelectorAll('.audio-btn')).indexOf(button);
+      const spinner = document.getElementById(`spinner-${index}`);
+      if (spinner) spinner.style.display = 'inline-block';
+      
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.9;
+        utterance.onend = () => { if (spinner) spinner.style.display = 'none'; };
+        utterance.onerror = () => { if (spinner) spinner.style.display = 'none'; };
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('Maaf, pelayar anda tidak menyokong ciri Text-to-Speech.');
+        if (spinner) spinner.style.display = 'none';
+      }
+    }
+
+    function playAllAudio() {
+      if (!('speechSynthesis' in window)) {
+        alert('Maaf, pelayar anda tidak menyokong ciri Text-to-Speech.');
+        return;
+      }
+      vocabData.forEach((item, index) => {
+        setTimeout(() => {
+          const utterance = new SpeechSynthesisUtterance(item.arabic);
+          utterance.lang = 'ar-SA';
+          utterance.rate = 0.9;
+          speechSynthesis.speak(utterance);
+        }, index * 1500);
+      });
+    }
+
+    function checkVocabAnswers() {
+      let correct = 0;
+      vocabData.forEach((item, index) => {
+        const select = document.getElementById(`vocab-q${index}`);
+        const feedback = document.getElementById(`vocab-answer-${index}`);
+        if (!select || !feedback) return;
+        
+        select.classList.remove("correct", "incorrect");
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        
+        if (select.value === item.answer) {
+          select.classList.add("correct");
+          correct++;
+        } else {
+          select.classList.add("incorrect");
+          feedback.textContent = `Jawapan betul: ${item.answer}`;
+          feedback.style.display = "block";
+        }
+      });
+      
+      scores.vocab = correct;
+      const total = vocabData.length;
+      const percent = (correct / total) * 100;
+      let badgeClass = percent >= 70 ? "score-good" : percent >= 40 ? "score-average" : "score-low";
+      
+      const scoreElement = document.getElementById("vocab-score");
+      if (scoreElement) {
+        scoreElement.innerHTML = `
+          <strong>Markah anda: ${correct} / ${total}</strong>
+          <div class="score-badge ${badgeClass}">Peratusan: ${percent.toFixed(1)}%</div>
+        `;
+      }
+      
+      updateProgress();
+    }
+
+    function createReorderQuiz() {
+      const container = document.getElementById("reorder-questions");
+      if (!container) return;
+      
+      container.innerHTML = "";
+      reorderData.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+        const shuffled = [...item.words].sort(() => Math.random() - 0.5);
+        const buttons = shuffled.map(word =>
+          `<button type="button" class="draggable" draggable="true" ondragstart="drag(event)" data-word="${word}">
+            ${word}
+          </button>`
+        ).join("");
+        
+        div.innerHTML = `
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
+              ${item.svg}
+            </div>
+            <div class="flex-grow-1" style="padding: 0 20px;">
+              <p><strong>${index + 1}.</strong> رتب الكلمات التالية لتكون سؤالاً صحيحاً:</p>
+              <div class="bg-white p-2 mb-2 rounded border" id="words-${index}">
+                ${buttons}
+              </div>
+              <div class="dropzone p-3" id="drop-${index}" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <span class="text-muted">اسحب الكلمات إلى هنا...</span>
+              </div>
+              <div class="mt-2">
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="resetOrder(${index})">
+                  <i class="bi bi-arrow-counterclockwise"></i> Padam
+                </button>
+              </div>
+              <div class="answer-key" id="reorder-answer-${index}" style="display: none;"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.dataset.word); }
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      const dropzone = ev.target.closest('.dropzone') || ev.target;
+      const existingText = dropzone.textContent.trim();
+      
+      if (existingText === "اسحب الكلمات إلى هنا...") { 
+        dropzone.innerHTML = ""; 
+      }
+      
+      const span = document.createElement("span");
+      span.className = "badge bg-primary me-1 mb-1";
+      span.textContent = data;
+      span.draggable = true;
+      span.dataset.word = data;
+      span.ondragstart = drag;
+      dropzone.appendChild(span);
+    }
+
+    function resetOrder(index) {
+      const dropzone = document.getElementById(`drop-${index}`);
+      const answerElement = document.getElementById(`reorder-answer-${index}`);
+      
+      if (dropzone) {
+        dropzone.innerHTML = '<span class="text-muted">اسحب الكلمات إلى هنا...</span>';
+      }
+      
+      if (answerElement) {
+        answerElement.style.display = "none";
+      }
+    }
+
+    function checkReorderAnswers() {
+      let correct = 0;
+      reorderData.forEach((item, index) => {
+        const dropzone = document.getElementById(`drop-${index}`);
+        const feedback = document.getElementById(`reorder-answer-${index}`);
+        
+        if (!dropzone || !feedback) return;
+        
+        const words = Array.from(dropzone.querySelectorAll(".badge")).map(el => el.textContent.trim());
+        const userAnswer = words.join(" ");
+        
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        
+        if (userAnswer === item.correct) {
+          feedback.innerHTML = `<span class="text-success">Jawapan betul ✓!</span>`;
+          feedback.style.display = "block";
+          correct++;
+        } else {
+          feedback.innerHTML = `Jawapan salah ✗. <strong>Jawapan betul:</strong> ${item.correct} <em>(${item.translation})</em>`;
+          feedback.style.display = "block";
+        }
+      });
+      
+      scores.reorder = correct;
+      const total = reorderData.length;
+      const percent = (correct / total) * 100;
+      let badgeClass = percent >= 70 ? "score-good" : percent >= 40 ? "score-average" : "score-low";
+      
+      const scoreElement = document.getElementById("reorder-score");
+      if (scoreElement) {
+        scoreElement.innerHTML = `
+          <strong>Markah anda: ${correct} / ${total}</strong>
+          <div class="score-badge ${badgeClass}">Peratusan: ${percent.toFixed(1)}%</div>
+        `;
+      }
+      
+      updateProgress();
+    }
+
+    function createDialogQuiz() {
+      const container = document.getElementById("dialog-questions");
+      if (!container) return;
+      
+      container.innerHTML = "";
+      dialogData.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+        const options = item.options.map(opt =>
+          `<div class="form-check">
+            <input class="form-check-input" type="radio" name="dialog-q${index}" value="${opt}" id="dialog-${index}-${opt}">
+            <label class="form-check-label" for="dialog-${index}-${opt}">${opt}</label>
+          </div>`
+        ).join("");
+        
+        const lines = item.dialogue.map(line => `<div class="dialog-bubble">${line}</div>`).join("");
+        
+        div.innerHTML = `
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
+              ${item.svg}
+            </div>
+            <div class="flex-grow-1" style="padding: 0 20px;">
+              <strong>${index + 1}.</strong>
+              <div>${lines}</div>
+              ${options}
+              <div class="answer-key" id="dialog-answer-${index}" style="display: none;"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function checkDialogAnswers() {
+      let correct = 0;
+      dialogData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="dialog-q${index}"]:checked`);
+        const feedback = document.getElementById(`dialog-answer-${index}`);
+        
+        if (!feedback) return;
+        
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        
+        if (selected && selected.value === item.answer) {
+          correct++;
+        } else {
+          feedback.textContent = `Jawapan betul: ${item.answer} (${item.translation})`;
+          feedback.style.display = "block";
+        }
+      });
+      
+      scores.dialog = correct;
+      const total = dialogData.length;
+      const percent = (correct / total) * 100;
+      let badgeClass = percent >= 70 ? "score-good" : percent >= 40 ? "score-average" : "score-low";
+      
+      const scoreElement = document.getElementById("dialog-score");
+      if (scoreElement) {
+        scoreElement.innerHTML = `
+          <strong>Markah anda: ${correct} / ${total}</strong>
+          <div class="score-badge ${badgeClass}">Peratusan: ${percent.toFixed(1)}%</div>
+        `;
+      }
+      
+      updateProgress();
+    }
+
+    function createMcqQuiz() {
+      const container = document.getElementById("mcq-questions");
+      if (!container) return;
+      
+      container.innerHTML = "";
+      mcqData.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("mb-4");
+        const options = item.options.map(opt =>
+          `<div class="form-check mcq-option">
+            <input class="form-check-input" type="radio" name="mcq-q${index}" value="${opt}" id="mcq-${index}-${opt}">
+            <label class="form-check-label" for="mcq-${index}-${opt}">${opt}</label>
+          </div>`
+        ).join("");
+        
+        div.innerHTML = `
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
+              ${item.svg}
+            </div>
+            <div class="flex-grow-1" style="padding: 0 20px;">
+              <p><strong>${index + 1}. ${item.question}</strong></p>
+              ${options}
+              <div class="answer-key" id="mcq-answer-${index}" style="display: none;"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function checkMcqAnswers() {
+      let correct = 0;
+      mcqData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="mcq-q${index}"]:checked`);
+        const feedback = document.getElementById(`mcq-answer-${index}`);
+        
+        if (!feedback) return;
+        
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        
+        if (selected && selected.value === item.answer) {
+          correct++;
+        } else {
+          feedback.textContent = `Jawapan betul: ${item.answer} (${item.translation})`;
+          feedback.style.display = "block";
+        }
+      });
+      
+      scores.mcq = correct;
+      const total = mcqData.length;
+      const percent = (correct / total) * 100;
+      let badgeClass = percent >= 70 ? "score-good" : percent >= 40 ? "score-average" : "score-low";
+      
+      const scoreElement = document.getElementById("mcq-score");
+      if (scoreElement) {
+        scoreElement.innerHTML = `
+          <strong>Markah anda: ${correct} / ${total}</strong>
+          <div class="score-badge ${badgeClass}">Peratusan: ${percent.toFixed(1)}%</div>
+        `;
+      }
+      
+      updateProgress();
+    }
+
+    function printResults() {
+      const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
+      const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
+      const percent = (total / max * 100).toFixed(1);
+      
+      let message = `=== KEPUTUSAN LATIHAN: أسماء الاستفهام ===
+`;
+      message += `1. المفردات:   ${scores.vocab}/${vocabData.length}
+`;
+      message += `2. رتب الكلمات: ${scores.reorder}/${reorderData.length}
+`;
+      message += `3. أكمل الحوار: ${scores.dialog}/${dialogData.length}
+`;
+      message += `4. الاختيار:     ${scores.mcq}/${mcqData.length}
+`;
+      message += `-------------------------------
+`;
+      message += `JUMLAH: ${total}/${max}
+`;
+      message += `PERATUSAN: ${percent}%
+`;
+      message += `===============================
+`;
+      
+      const w = window.open();
+      w.document.write(`
+        <html dir="ltr">
+          <head><title>Keputusan</title></head>
+          <body style="font-family: Arial; padding: 40px; line-height: 1.6;">
+            <pre style="font-size: 16px;">${message}</pre>
+            <p><small>Dicetak pada: ${new Date().toLocaleString('ms-MY')}</small></p>
+          </body>
+        </html>
+      `);
+      w.document.close();
+      w.print();
+    }
+
+    function downloadTxt() {
+      const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
+      const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
+      const percent = (total / max * 100).toFixed(1);
+      
+      const text = `KEPUTUSAN LATIHAN: أسماء الاستفهام
+================================
+1. المفردات:   ${scores.vocab}/${vocabData.length}
+2. رتب الكلمات: ${scores.reorder}/${reorderData.length}
+3. أكمل الحوار: ${scores.dialog}/${dialogData.length}
+4. الاختيار:     ${scores.mcq}/${mcqData.length}
+-------------------------------
+JUMLAH: ${total}/${max}
+PERATUSAN: ${percent}%
+Dicetak pada: ${new Date().toLocaleString('ms-MY')}
+`;
+      
+      const blob = new Blob([text], { type: "text/plain; charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `keputusan_asma_al_istifham_${new Date().toISOString().slice(0,10)}.txt`;
+      link.click();
+    }
+
+    function downloadCsv() {
+      const total = scores.vocab + scores.reorder + scores.dialog + scores.mcq;
+      const max = vocabData.length + reorderData.length + dialogData.length + mcqData.length;
+      
+      const csv = [
+        ["Seksyen", "Markah", "Tertinggi", "Peratusan"],
+        ["المفردات", scores.vocab, vocabData.length, ((scores.vocab/vocabData.length)*100).toFixed(1)+"%"],
+        ["رتب الكلمات", scores.reorder, reorderData.length, ((scores.reorder/reorderData.length)*100).toFixed(1)+"%"],
+        ["أكمل الحوار", scores.dialog, dialogData.length, ((scores.dialog/dialogData.length)*100).toFixed(1)+"%"],
+        ["اختر الإجابة", scores.mcq, mcqData.length, ((scores.mcq/mcqData.length)*100).toFixed(1)+"%"],
+        ["JUMLAH", total, max, ((total/max)*100).toFixed(1)+"%"]
+      ].map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+      
+      const blob = new Blob([csv], { type: "text/csv; charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `keputusan_asma_al_istifham_${new Date().toISOString().slice(0,10)}.csv`;
+      link.click();
+    }
+
+    // Fungsi untuk memulakan aplikasi
+    function initializeApp() {
+      createVocabQuiz();
+      createReorderQuiz();
+      createDialogQuiz();
+      createMcqQuiz();
+      startTimeTracking();
+      updateProgress();
+      
+      // Muatkan kemajuan yang disimpan jika ada
+      const savedProgress = localStorage.getItem('asmaIstifhamProgress');
+      if (savedProgress) {
+        if (confirm('Adakah anda ingin memuatkan kemajuan sebelumnya?')) {
+          loadProgress();
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initializeApp);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
