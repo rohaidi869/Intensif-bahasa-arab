@@ -8,44 +8,269 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <style>
-    body { font-family: 'Tajawal', 'Noto Sans', sans-serif; font-size: 18px; direction: rtl; text-align: right; padding: 20px; background: linear-gradient(135deg, #e0f7fa, #f3e5f5); min-height: 100vh; margin: 0; }
-    h2 { color: #1565c0; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
-    .nav-tabs .nav-link { border: 1px solid #1565c0 !important; border-radius: 12px !important; margin: 0 5px; color: #1565c0; font-weight: 600; transition: all 0.3s ease; }
-    .nav-tabs .nav-link.active { background-color: #1565c0 !important; color: white !important; border-color: #1565c0 !important; }
+    /* CSS yang dioptimumkan untuk responsiviti */
+    body { 
+      font-family: 'Tajawal', 'Noto Sans', sans-serif; 
+      font-size: 18px; 
+      direction: rtl; 
+      text-align: right; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #e0f7fa, #f3e5f5); 
+      min-height: 100vh; 
+      margin: 0; 
+    }
+    
+    h2 { 
+      color: #1565c0; 
+      font-weight: 700; 
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1); 
+    }
+    
+    /* Navigasi responsif */
+    .nav-tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-tabs {
+        flex-direction: column;
+      }
+      
+      .nav-tabs .nav-link {
+        margin: 5px 0;
+        text-align: center;
+      }
+    }
+    
+    .nav-tabs .nav-link { 
+      border: 1px solid #1565c0 !important; 
+      border-radius: 12px !important; 
+      margin: 0 5px; 
+      color: #1565c0; 
+      font-weight: 600; 
+      transition: all 0.3s ease; 
+      white-space: nowrap;
+    }
+    
+    .nav-tabs .nav-link.active { 
+      background-color: #1565c0 !important; 
+      color: white !important; 
+      border-color: #1565c0 !important; 
+    }
+    
     .tab-content > .tab-pane { display: none; }
     .tab-content > .active { display: block; }
-    .card { border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: white; padding: 20px; margin-bottom: 20px; transition: transform 0.2s; }
+    
+    .card { 
+      border-radius: 16px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+      background: white; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      transition: transform 0.2s; 
+    }
+    
     .card:hover { transform: translateY(-5px); }
-    .correct { border: 2px solid #4caf50; background-color: #e8f5e8; animation: highlight 0.8s ease-in-out; }
-    .incorrect { border: 2px solid #f44336; background-color: #ffebee; animation: shake 0.5s ease-in-out; }
-    @keyframes highlight { 0% { background: #fffacd; } 100% { background: #e8f5e8; } }
-    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-    .answer-key { font-size: 0.95em; color: #d32f2f; margin-top: 8px; padding: 6px 10px; background: #ffebee; border-radius: 6px; border: 1px dashed #c62828; }
-    .draggable { cursor: grab; display: inline-block; margin: 3px; padding: 8px 12px; background: #0d6efd; color: white; border-radius: 8px; font-weight: 500; user-select: none; transition: all 0.2s; }
+    
+    .correct { 
+      border: 2px solid #4caf50; 
+      background-color: #e8f5e8; 
+      animation: highlight 0.8s ease-in-out; 
+    }
+    
+    .incorrect { 
+      border: 2px solid #f44336; 
+      background-color: #ffebee; 
+      animation: shake 0.5s ease-in-out; 
+    }
+    
+    @keyframes highlight { 
+      0% { background: #fffacd; } 
+      100% { background: #e8f5e8; } 
+    }
+    
+    @keyframes shake { 
+      0%, 100% { transform: translateX(0); } 
+      25% { transform: translateX(-5px); } 
+      75% { transform: translateX(5px); } 
+    }
+    
+    .answer-key { 
+      font-size: 0.95em; 
+      color: #d32f2f; 
+      margin-top: 8px; 
+      padding: 6px 10px; 
+      background: #ffebee; 
+      border-radius: 6px; 
+      border: 1px dashed #c62828; 
+    }
+    
+    /* Elemen draggable yang lebih besar untuk mudah alih */
+    .draggable { 
+      cursor: grab; 
+      display: inline-block; 
+      margin: 3px; 
+      padding: 12px 16px; 
+      background: #0d6efd; 
+      color: white; 
+      border-radius: 8px; 
+      font-weight: 500; 
+      user-select: none; 
+      transition: all 0.2s; 
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    @media (max-width: 576px) {
+      .draggable {
+        padding: 10px 12px;
+        font-size: 16px;
+        min-width: 50px;
+      }
+    }
+    
     .draggable:hover { background: #0b5ed7; transform: scale(1.05); }
     .draggable:active { cursor: grabbing; }
-    .dropzone { min-height: 60px; border: 2px dashed #2196f3; margin: 12px 0; padding: 12px; border-radius: 8px; background: #e3f2fd; transition: all 0.3s; }
+    
+    .dropzone { 
+      min-height: 70px; 
+      border: 2px dashed #2196f3; 
+      margin: 12px 0; 
+      padding: 12px; 
+      border-radius: 8px; 
+      background: #e3f2fd; 
+      transition: all 0.3s; 
+    }
+    
     .dropzone:hover { border-color: #0d6efd; background: #bbdefb; }
+    
     .badge.bg-primary { font-size: 1em; padding: 6px 10px; }
     .btn-check { margin: 5px 0; }
-    .btn-custom { border-radius: 10px; padding: 10px 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
-    .score-badge { font-weight: bold; padding: 8px 16px; border-radius: 50px; display: inline-block; margin-top: 10px; }
+    
+    .btn-custom { 
+      border-radius: 10px; 
+      padding: 10px 20px; 
+      font-weight: 600; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+    
+    @media (max-width: 576px) { 
+      .btn-custom { 
+        font-size: 0.95rem; 
+        padding: 8px 16px; 
+      } 
+      
+      body {
+        font-size: 16px;
+        padding: 10px;
+      }
+      
+      .card {
+        padding: 15px;
+      }
+    }
+    
+    .score-badge { 
+      font-weight: bold; 
+      padding: 8px 16px; 
+      border-radius: 50px; 
+      display: inline-block; 
+      margin-top: 10px; 
+    }
+    
     .score-good { background: #e8f5e8; color: #2e7d32; border: 1px solid #4caf50; }
     .score-average { background: #fff8e1; color: #9c6d00; border: 1px solid #ffab00; }
     .score-low { background: #ffebee; color: #c62828; border: 1px solid #f44336; }
-    .footer-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    
+    .footer-buttons { 
+      display: flex; 
+      gap: 10px; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+    }
+    
+    @media (max-width: 576px) {
+      .footer-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .footer-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+    
     .routine-svg { width: 80px; height: 80px; margin: 10px auto; }
-    .dialog-bubble { background: #e3f2fd; border-radius: 18px; padding: 12px 18px; margin: 8px 0; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .dialog-bubble::after { content: ''; position: absolute; bottom: -10px; left: 20px; border-width: 10px 10px 0; border-style: solid; border-color: #e3f2fd transparent; }
-    .audio-btn { background: none; border: none; color: #1565c0; cursor: pointer; padding: 3px 6px; border-radius: 50%; transition: all 0.2s; }
+    
+    .dialog-bubble { 
+      background: #e3f2fd; 
+      border-radius: 18px; 
+      padding: 12px 18px; 
+      margin: 8px 0; 
+      position: relative; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    }
+    
+    .dialog-bubble::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -10px; 
+      left: 20px; 
+      border-width: 10px 10px 0; 
+      border-style: solid; 
+      border-color: #e3f2fd transparent; 
+    }
+    
+    .audio-btn { 
+      background: none; 
+      border: none; 
+      color: #1565c0; 
+      cursor: pointer; 
+      padding: 8px; 
+      border-radius: 50%; 
+      transition: all 0.2s; 
+      font-size: 1.2em;
+    }
+    
     .audio-btn:hover { background: #e3f2fd; transform: scale(1.1); }
     .audio-btn:active { transform: scale(0.95); }
-    .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; margin-right: 5px; display: none; }
+    
+    .loading-spinner { 
+      display: inline-block; 
+      width: 16px; 
+      height: 16px; 
+      border: 2px solid rgba(255,255,255,.3); 
+      border-radius: 50%; 
+      border-top-color: #fff; 
+      animation: spin 1s ease-in-out infinite; 
+      margin-right: 5px; 
+      display: none; 
+    }
+    
     @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 576px) { .btn-custom { font-size: 0.95rem; padding: 8px 16px; } }
+    
     /* Gaya baru untuk penambahbaikan Google Classroom */
-    .student-info { background: #e3f2fd; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 2px solid #1565c0; }
-    .submission-info { background: #e8f5e9; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 2px solid #4caf50; }
+    .student-info { 
+      background: #e3f2fd; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      border: 2px solid #1565c0; 
+    }
+    
+    .submission-info { 
+      background: #e8f5e9; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      border: 2px solid #4caf50; 
+    }
+    
     .progress-section { margin: 20px 0; }
     .completion-badge { font-size: 0.9em; padding: 5px 10px; margin-left: 10px; }
     .time-tracking { font-size: 0.9em; color: #666; margin-top: 5px; }
@@ -53,6 +278,7 @@
     /* Gaya khas untuk modal panduan LTR */
     .ltr-guide { direction: ltr; text-align: left; }
     .ltr-guide ol { padding-left: 20px; }
+    
     .step-number { 
       display: inline-block; 
       width: 24px; 
@@ -65,11 +291,21 @@
       margin-right: 8px; 
       font-size: 0.8em;
     }
+    
     .guide-section { border-left: 3px solid #0d6efd; padding-left: 15px; margin-bottom: 20px; }
     .guide-icon { font-size: 1.5em; margin-right: 10px; color: #0d6efd; }
+    
+    /* Gaya untuk input yang lebih besar pada mudah alih */
+    @media (max-width: 576px) {
+      .form-control, .form-select {
+        font-size: 16px; /* Mencegah zum automatik pada iOS */
+        padding: 12px;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Header dengan animasi SVG -->
   <div class="text-center mb-4">
     <div style="position: relative; height: 80px; margin-bottom: 20px;">
       <svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 100%; height: 100%;">
@@ -134,7 +370,8 @@
     </div>
   </div>
 
-  <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+  <!-- Navigasi Tab - Responsif -->
+  <ul class="nav nav-tabs mb-4 flex-md-row flex-column" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active btn-custom" id="tab1" data-bs-toggle="tab" data-bs-target="#section1" type="button" role="tab">
         <i class="bi bi-book"></i> المفردات
@@ -157,6 +394,7 @@
     </li>
   </ul>
   
+  <!-- Kandungan Tab -->
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="section1" role="tabpanel">
       <div class="card">
@@ -208,11 +446,7 @@
     </div>
   </div>
 
-  <!-- ========================================== -->
-  <!-- ENHANCED UI UNTUK PELAJAR - TAMBAH DI SINI -->
-  <!-- ========================================== -->
-  
-  <!-- Help Section untuk Pelajar -->
+  <!-- Bahagian Bantuan dan Tips -->
   <div class="row mt-4">
     <div class="col-md-6">
       <div class="card">
@@ -282,14 +516,14 @@
     <h4><i class="bi bi-google"></i> Penghantaran ke Google Classroom</h4>
     <p>Setelah selesai semua bahagian latihan, sila muat turun fail jawapan anda dan hantar melalui Google Classroom.</p>
     
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <div>
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row">
+      <div class="mb-3 mb-md-0">
         <h5>Status Penghantaran</h5>
         <div id="submissionStatus" class="alert alert-warning" role="alert">
           <i class="bi bi-exclamation-triangle"></i> Latihan belum selesai sepenuhnya.
         </div>
       </div>
-      <div class="text-end">
+      <div class="text-center text-md-end">
         <button class="btn btn-success btn-custom" onclick="generateSubmissionFile()" id="submitButton" disabled>
           <i class="bi bi-cloud-arrow-down"></i> Jana Fail Penghantaran
         </button>
@@ -316,11 +550,7 @@
     </div>
   </div>
 
-  <!-- ========================================== -->
-  <!-- MODAL UNTUK PANDUAN - TAMBAH DI SINI -->
-  <!-- ========================================== -->
-  
-  <!-- Modal Panduan Penghantaran - DIUBAH SUSUNAN DARI KIRI KE KANAN -->
+  <!-- Modal Panduan Penghantaran -->
   <div class="modal fade" id="submissionGuide" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content ltr-guide">
@@ -350,13 +580,13 @@
                   </li>
                   <li class="mb-2">
                     <span class="step-number">3</span>
-                    <strong>Klik "Semak Jawapan"</strong>
+                    <strong>Klik "تحقق من الإجابة"</strong>
                     <div class="small text-muted">Untuk setiap bahagian setelah selesai</div>
                   </li>
                   <li class="mb-2">
                     <span class="step-number">4</span>
-                    <strong>Pastikan Status Hijau</strong>
-                    <div class="small text-muted">Semua bahagian mesti berstatus ✅</div>
+                    <strong>Status Hijau</strong>
+                    <div class="small text-muted">’Menunjukkan soalan yang dijawab adalah betul</div>
                   </li>
                   <li class="mb-2">
                     <span class="step-number">5</span>
@@ -455,7 +685,7 @@
     </div>
   </div>
 
-  <!-- Modal Kejayaan - DIUBAH SUSUNAN DARI KIRI KE KANAN -->
+  <!-- Modal Kejayaan -->
   <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content ltr-guide">
@@ -1008,8 +1238,8 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         const div = document.createElement("div");
         div.classList.add("mb-4");
         div.innerHTML = `
-          <div class="p-3 border rounded bg-light d-flex">
-            <div class="text-center" style="width: 100px; flex-shrink: 0;">
+          <div class="p-3 border rounded bg-light d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
               ${item.svg}
               <div class="mt-2">
                 <strong>${item.arabic}</strong>
@@ -1132,8 +1362,8 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         ).join("");
         
         div.innerHTML = `
-          <div class="d-flex">
-            <div class="text-center" style="width: 100px; flex-shrink: 0;">
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
               ${item.svg}
             </div>
             <div class="flex-grow-1" style="padding: 0 20px;">
@@ -1262,8 +1492,8 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         const lines = item.dialogue.map(line => `<div class="dialog-bubble">${line}</div>`).join("");
         
         div.innerHTML = `
-          <div class="d-flex">
-            <div class="text-center" style="width: 100px; flex-shrink: 0;">
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
               ${item.svg}
             </div>
             <div class="flex-grow-1" style="padding: 0 20px;">
@@ -1342,8 +1572,8 @@ Tarikh: ${new Date().toLocaleDateString('ms-MY')}
         ).join("");
         
         div.innerHTML = `
-          <div class="d-flex">
-            <div class="text-center" style="width: 100px; flex-shrink: 0;">
+          <div class="d-flex flex-column flex-md-row">
+            <div class="text-center mb-3 mb-md-0" style="width: 100px; flex-shrink: 0;">
               ${item.svg}
             </div>
             <div class="flex-grow-1" style="padding: 0 20px;">
